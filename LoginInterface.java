@@ -35,16 +35,24 @@ public class LoginInterface extends JFrame {
         add(statusLabel);
 
         // Add action listener to the button
-        loginButton.addActionListener(e -> {
-            if ("admin".equals(usernameField.getText()) && "password".equals(new String(passwordField.getPassword()))) {
-                statusLabel.setText("Login successful!");
-            } else {
-                statusLabel.setText("Login failed!");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("admin".equals(usernameField.getText()) && "password".equals(new String(passwordField.getPassword()))) {
+                    statusLabel.setText("Login successful!");
+                } else {
+                    statusLabel.setText("Login failed!");
+                }
             }
         });
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginInterface().setVisible(true));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new LoginInterface().setVisible(true);
+            }
+        });
     }
 }
