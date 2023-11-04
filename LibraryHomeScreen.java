@@ -49,6 +49,15 @@ public class LibraryHomeScreen extends JFrame {
         buttonPanel.add(btnManageMembers);
         buttonPanel.add(btnCheckOutBook);
         buttonPanel.add(btnReturnBook);
+        btnManageBooks.addActionListener(e -> {openManageBooks();
+            dispose();});
+        btnManageMembers.addActionListener(e -> {openManageMembers();
+            dispose();});
+        btnCheckOutBook.addActionListener(e -> {openCheckInBook();
+            dispose();});
+        btnReturnBook.addActionListener(e -> {openReturnBook();
+            dispose();});
+
 
         // Add the button panel to the center of the layout
         add(buttonPanel, BorderLayout.CENTER);
@@ -61,6 +70,22 @@ public class LibraryHomeScreen extends JFrame {
 
         // Make the frame visible
         setVisible(true);
+    }
+    private void openManageBooks() {
+        new manageBooksFrame(); // Open the Manage Books frame
+
+    }
+
+    private void openManageMembers() {
+        new manageMembersFrame();// Open the Manage Members frame
+    }
+
+    private void openCheckInBook() {
+        new checkInBookFrame();// Open the Check In Book frame
+    }
+
+    private void openReturnBook() {
+        new returnBookFrame();// Open the Return Book frame
     }
 
 

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+
 
 public class LoginInterface extends JFrame {
     private JTextField usernameField;
@@ -17,6 +17,7 @@ public class LoginInterface extends JFrame {
         // Set up the frame
         setTitle("Login");
         setSize(300, 150);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Create components
