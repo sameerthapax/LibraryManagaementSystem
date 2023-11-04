@@ -41,7 +41,7 @@ public class LoginInterface extends JFrame {
 
         // Add action listener to the button
         loginButton.addActionListener(e -> {
-            if ("admin".equals(usernameField.getText()) && "password".equals(new String(passwordField.getPassword()))) {
+            if ("1".equals(usernameField.getText()) && "1".equals(new String(passwordField.getPassword()))) {
                 statusLabel.setText("Login successful!");
                 LibraryHomeScreen home = new LibraryHomeScreen();
                 home.setVisible(true);
