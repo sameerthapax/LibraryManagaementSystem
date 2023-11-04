@@ -12,6 +12,7 @@ public class LoginInterface extends JFrame {
         createUI();
     }
 
+
     private void createUI() {
         // Set up the frame
         setTitle("Login");
@@ -33,26 +34,23 @@ public class LoginInterface extends JFrame {
         add(passwordField);
         add(loginButton);
         add(statusLabel);
+        setVisible(true);
+
+
 
         // Add action listener to the button
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ("admin".equals(usernameField.getText()) && "password".equals(new String(passwordField.getPassword()))) {
-                    statusLabel.setText("Login successful!");
-                } else {
-                    statusLabel.setText("Login failed!");
-                }
+        loginButton.addActionListener(e -> {
+            if ("admin".equals(usernameField.getText()) && "password".equals(new String(passwordField.getPassword()))) {
+                statusLabel.setText("Login successful!");
+                LibraryHomeScreen home = new LibraryHomeScreen();
+                home.setVisible(true);
+                setVisible(false);
+
+            } else {
+                statusLabel.setText("Login failed!");
             }
         });
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LoginInterface().setVisible(true);
-            }
-        });
-    }
+
 }
