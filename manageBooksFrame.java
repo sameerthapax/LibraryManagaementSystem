@@ -12,11 +12,20 @@ public class manageBooksFrame extends JFrame {
         // For now, we'll just add a label to indicate this is the Manage Books frame
         JLabel label = new JLabel("Book management operations will go here", SwingConstants.CENTER);
 
-        JButton home = new JButton("Home");//creating new button for going back to home
+        ImageIcon homeIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/home.png");
+        JButton home = new JButton(homeIcon);//creating new button for going back to home
         home.addActionListener(e -> {new LibraryHomeScreen();
         dispose();});
         home.setBounds(930,700,64,64);
         add(home);
+
+        JLabel title = new JLabel("Book Management");
+        Font titleFont = new Font("Aharoni", Font.BOLD,58);
+        title.setFont(titleFont);
+
+        title.setBounds(230,5,700,80);
+        add(title);
+
         JPanel  midScreen = new JPanel();
         midScreen.setSize(300,300);
         midScreen.setBounds(50,50,900,700);
