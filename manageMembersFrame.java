@@ -31,6 +31,9 @@ public class manageMembersFrame extends JFrame {
         midScreen.setSize(300,300);
         midScreen.setBounds(50,50,900,700);
         midScreen.setBackground(Color.PINK);
+        midScreen.setLayout(new GridLayout(2,2));
+        JPanel currentUserPanel = new JPanel();
+
 
         add(midScreen);
 
