@@ -35,7 +35,7 @@ public class LibraryHomeScreen extends JFrame {
 
         // Set the menu bar
         setJMenuBar(menuBar);
-        ImageIcon manageBooksIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/briefcase.png");
+        ImageIcon manageBooksIcon = new ImageIcon("briefcase.png");
         // Create buttons for different actions
         JButton btnManageBooks = new JButton("Manage Books", manageBooksIcon);
         Font itemsFont = new Font("Monaco",Font.BOLD,14);
@@ -43,19 +43,19 @@ public class LibraryHomeScreen extends JFrame {
         btnManageBooks.setIconTextGap(20);
 
 
-        ImageIcon manageMembersIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/user.png");
+        ImageIcon manageMembersIcon = new ImageIcon("user.png");
 
         JButton btnManageMembers = new JButton("Manage Members", manageMembersIcon);
         btnManageMembers.setFont(itemsFont);
         btnManageMembers.setIconTextGap(20);
 
-        ImageIcon checkInBookIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/check.png");
+        ImageIcon checkInBookIcon = new ImageIcon("check.png");
 
         JButton btnCheckInBook = new JButton("Check In Book",checkInBookIcon);
         btnCheckInBook.setFont(itemsFont);
         btnCheckInBook.setIconTextGap(20);
 
-        ImageIcon returnBookIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/return.png");
+        ImageIcon returnBookIcon = new ImageIcon("return.png");
 
         JButton btnReturnBook = new JButton("Return Book",returnBookIcon);
         btnReturnBook.setFont(itemsFont);

@@ -11,7 +11,7 @@ public class manageMembersFrame extends JFrame {
         // Add content to this frame (e.g., a form to add/edit books)
         // For now, we'll just add a label to indicate this is the Manage Books frame
         JLabel label = new JLabel("Members management operations will go here", SwingConstants.CENTER);
-        ImageIcon homeIcon = new ImageIcon("/Users/sams/Desktop/MSU/Fourth Sem/CSC325/1/source image/home.png");
+        ImageIcon homeIcon = new ImageIcon("home.png");
 
         JButton home = new JButton(homeIcon);//creating new button for going back to home
         home.addActionListener(e -> {new LibraryHomeScreen();
