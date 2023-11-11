@@ -76,13 +76,13 @@ public class checkInBookFrame extends JFrame {
     private void borrowBook() {
         try {
             int bookId = Integer.parseInt(bookIdField.getText());
-            int userId = Integer.parseInt(userIdField.getText());
+            String username = userIdField.getText();
 
             // Assuming LibraryDatabase has the necessary methods
-            if (LibraryDatabase.isBookAvailable(bookId) && LibraryDatabase.isUserValid(userId)) {
+            if (LibraryDatabase.isBookAvailable(bookId) && LibraryDatabase.isUserValid(username)) {
                 LocalDate returnDate = LocalDate.now().plusDays(14); // 14-day borrowing period
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LibraryDatabase.issueBook(userId, bookId, LocalDate.now().format(formatter), Integer.parseInt(returnDate.format(formatter)));
+                LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), Integer.parseInt(returnDate.format(formatter)));
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Book is not available or user ID is invalid.");

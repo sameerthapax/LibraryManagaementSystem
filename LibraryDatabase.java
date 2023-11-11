@@ -9,10 +9,24 @@ public class LibraryDatabase {
     private static int bookCount = 0;
     private static int issuedCount = 0;
 
-    private static Map<Integer, User> users = new HashMap<>();
+    private static final Map<String, User> users = new HashMap<>();
     private static final Map<Integer, Book> books = new HashMap<>();
-    private static Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
+    private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
     static generateRandomBookId bookId1 = new generateRandomBookId();
+    static {
+        // Add default admin user
+        addUser(new User("admin", "admin"));
+    }
+
+
+    public static void addUser(User user) {
+        users.put(user.getUsername(), user); // Store user by username
+    }
+
+    public static boolean authenticate(String username, String password) {
+        User user = users.get(username);
+        return user != null && user.getPassword().equals(password); // Compare password
+    }
 
 
 
@@ -45,9 +59,9 @@ public class LibraryDatabase {
         }
         return dataVector;
     }
-    public static void issueBook(int userId, int bookId, String issuedDate, int period) {
+    public static void issueBook(String username, int bookId, String issuedDate, int period) {
         Book book = books.get(bookId);
-        User user = users.get(userId);
+        User user = users.get(username);
 
         if (book != null && user != null && !book.isIssued) {
             book.isIssued = true; // Mark the book as issued
@@ -58,7 +72,7 @@ public class LibraryDatabase {
             String formattedReturnDate = returnDate.format(formatter);
 
             // Record the issued book details
-            IssuedBook issuedBook = new IssuedBook(userId, bookId, issuedDate, formattedReturnDate);
+            IssuedBook issuedBook = new IssuedBook(username, bookId, issuedDate, formattedReturnDate);
             issuedBooks.put(bookId, issuedBook);
         } else {
             // Handle the case where the book can't be issued
@@ -72,19 +86,19 @@ public class LibraryDatabase {
         return book != null && !book.isIssued;
     }
 
-    public static boolean isUserValid(int userId) {
+    public static boolean isUserValid(String userId) {
         return users.containsKey(userId);
     }
 
 }
 class IssuedBook {
-    int userId;
+    String username;
     int bookId;
     String issuedDate;
     String returnDate;
 
-    public IssuedBook(int userId, int bookId, String issuedDate, String returnDate) {
-        this.userId = userId;
+    public IssuedBook(String username, int bookId, String issuedDate, String returnDate) {
+        this.username = username;
         this.bookId = bookId;
         this.issuedDate = issuedDate;
         this.returnDate = returnDate;
