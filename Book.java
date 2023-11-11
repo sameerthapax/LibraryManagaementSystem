@@ -1,12 +1,13 @@
 public class Book {
-    static int bid;
+
+    int bid;
     String bname;
     String genre;
     int price;
     boolean isIssued;
 
     public Book(int bid, String bname, String genre, int price) {
-        Book.bid = bid;
+        this.bid = bid;
         this.bname = bname;
         this.genre = genre;
         this.price = price;

@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -25,7 +27,7 @@ public class LibraryDatabase {
 
 
     public static void addBook(Book book) {
-        books.put(Book.bid, book);
+        books.put( book.bid, book);
     }
 
     public static Map<Integer, Book> getBooks() {
@@ -35,7 +37,7 @@ public class LibraryDatabase {
         Vector<Vector<Object>> dataVector = new Vector<>();
         for (Book book : books.values()) {
             Vector<Object> row = new Vector<>();
-            row.add(Book.bid);
+            row.add(book.bid);
             row.add(book.bname);
             row.add(book.genre);
             row.add(book.price);
@@ -43,6 +45,50 @@ public class LibraryDatabase {
         }
         return dataVector;
     }
-    // ... (Include other methods like issueBook, returnBook, getBooks, addBook, etc.)
-}
+    public static void issueBook(int userId, int bookId, String issuedDate, int period) {
+        Book book = books.get(bookId);
+        User user = users.get(userId);
 
+        if (book != null && user != null && !book.isIssued) {
+            book.isIssued = true; // Mark the book as issued
+
+            // Calculate return date
+            LocalDate returnDate = LocalDate.parse(issuedDate).plusDays(period);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedReturnDate = returnDate.format(formatter);
+
+            // Record the issued book details
+            IssuedBook issuedBook = new IssuedBook(userId, bookId, issuedDate, formattedReturnDate);
+            issuedBooks.put(bookId, issuedBook);
+        } else {
+            // Handle the case where the book can't be issued
+            // This could be due to invalid user/book ID, or the book is already issued
+            throw new IllegalStateException("Book cannot be issued.");
+        }
+    }
+
+    public static boolean isBookAvailable(int bookId) {
+        Book book = books.get(bookId);
+        return book != null && !book.isIssued;
+    }
+
+    public static boolean isUserValid(int userId) {
+        return users.containsKey(userId);
+    }
+
+}
+class IssuedBook {
+    int userId;
+    int bookId;
+    String issuedDate;
+    String returnDate;
+
+    public IssuedBook(int userId, int bookId, String issuedDate, String returnDate) {
+        this.userId = userId;
+        this.bookId = bookId;
+        this.issuedDate = issuedDate;
+        this.returnDate = returnDate;
+    }
+
+    // Getters and setters
+}
