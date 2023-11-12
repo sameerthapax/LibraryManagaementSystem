@@ -13,10 +13,7 @@ public class LibraryDatabase {
     private static final Map<Integer, Book> books = new HashMap<>();
     private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
     static generateRandomBookId bookId1 = new generateRandomBookId();
-    static {
-        // Add default admin user
-        addUser(new User("admin", "admin"));
-    }
+
 
 
     public static void addUser(User user) {
@@ -33,6 +30,7 @@ public class LibraryDatabase {
 
     public static void create() {
         // Add three default books to the database
+
         addBook(new Book(bookId1.generaterandombook(), "1984", "Dystopian", 15));
         addBook(new Book(bookId1.generaterandombook(), "To Kill a Mockingbird", "Classic", 12));
         addBook(new Book(bookId1.generaterandombook(), "The Great Gatsby", "Classic", 10));
@@ -86,8 +84,8 @@ public class LibraryDatabase {
         return book != null && !book.isIssued;
     }
 
-    public static boolean isUserValid(String userId) {
-        return users.containsKey(userId);
+    public static boolean isUserValid(String username) {
+        return users.containsKey(username);
     }
 
 }

@@ -55,14 +55,19 @@ public class checkInBookFrame extends JFrame {
         userIdLabel.setBounds(50, 150, 100, 30);
         midScreen.add(userIdLabel);
 
+
         userIdField = new JTextField();
         userIdField.setBounds(150, 150, 200, 30);
         midScreen.add(userIdField);
 
+
         // Borrow Button
         borrowButton = new JButton("Borrow Book");
         borrowButton.setBounds(150, 200, 200, 30);
-        borrowButton.addActionListener(e -> borrowBook());
+        borrowButton.addActionListener(e -> {
+            borrowBook();
+
+        });
         midScreen.add(borrowButton);
 
 
@@ -72,17 +77,17 @@ public class checkInBookFrame extends JFrame {
 
         setVisible(true);
     }
-
+    int bookId;
+    String username;
     private void borrowBook() {
         try {
-            int bookId = Integer.parseInt(bookIdField.getText());
-            String username = userIdField.getText();
+            bookId = Integer.parseInt(bookIdField.getText());
+            username = userIdField.getText();
 
             // Assuming LibraryDatabase has the necessary methods
-            if (LibraryDatabase.isBookAvailable(bookId) && LibraryDatabase.isUserValid(username)) {
-                LocalDate returnDate = LocalDate.now().plusDays(14); // 14-day borrowing period
+            if ((LibraryDatabase.isBookAvailable(bookId)) && (LibraryDatabase.isUserValid(username))){
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), Integer.parseInt(returnDate.format(formatter)));
+                LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), 14);
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Book is not available or user ID is invalid.");
