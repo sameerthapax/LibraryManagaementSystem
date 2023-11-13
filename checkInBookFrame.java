@@ -41,59 +41,8 @@ public class checkInBookFrame extends JFrame {
         midScreen.setBackground(Color.PINK);
         add(midScreen);
 
-        // Book ID Input
-        JLabel bookIdLabel = new JLabel("Book ID:");
-        bookIdLabel.setBounds(50, 100, 100, 30);
-        midScreen.add(bookIdLabel);
-
-        bookIdField = new JTextField();
-        bookIdField.setBounds(150, 100, 200, 30);
-        midScreen.add(bookIdField);
-
-        // User ID Input
-        JLabel userIdLabel = new JLabel("User ID:");
-        userIdLabel.setBounds(50, 150, 100, 30);
-        midScreen.add(userIdLabel);
-
-
-        userIdField = new JTextField();
-        userIdField.setBounds(150, 150, 200, 30);
-        midScreen.add(userIdField);
-
-
-        // Borrow Button
-        borrowButton = new JButton("Borrow Book");
-        borrowButton.setBounds(150, 200, 200, 30);
-        borrowButton.addActionListener(e -> {
-            borrowBook();
-
-        });
-        midScreen.add(borrowButton);
-
-
-
-
-
-
+        // Make the frame visible
         setVisible(true);
     }
-    int bookId;
-    String username;
-    private void borrowBook() {
-        try {
-            bookId = Integer.parseInt(bookIdField.getText());
-            username = userIdField.getText();
-
-            // Assuming LibraryDatabase has the necessary methods
-            if ((LibraryDatabase.isBookAvailable(bookId)) && (LibraryDatabase.isUserValid(username))){
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), 14);
-                JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Book is not available or user ID is invalid.");
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter valid IDs.");
-        }
-    }
 }
+
