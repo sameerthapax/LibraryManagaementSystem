@@ -41,21 +41,44 @@ public class manageBooksFrame extends JFrame {
         midScreen.setBackground(Color.PINK);
         add(midScreen);
 
+        JPanel invisiblePanel1 = new JPanel(null);
+        invisiblePanel1.setOpaque(false);
+
+        JPanel invisiblePanel2 = new JPanel(null);
+        invisiblePanel2.setOpaque(false);
+
+        JPanel invisiblePanel3 = new JPanel(null);
+        invisiblePanel3.setOpaque(false);
+
+
+        Font formFieldFont = new Font("Gurmukhi MN",Font.PLAIN, 38);
         // Form fields
         JLabel nameLabel = new JLabel("Book Name:");
+        nameLabel.setFont(formFieldFont);
         JTextField nameField = new JTextField();
         JLabel genreLabel = new JLabel("Genre:");
+        genreLabel.setFont(formFieldFont);
         JTextField genreField = new JTextField();
         JLabel priceLabel = new JLabel("Price:");
+        priceLabel.setFont(formFieldFont);
         JTextField priceField = new JTextField();
 
 
         // Add form fields to midScreen
-        midScreen.add(nameLabel);
+
+        midScreen.add(invisiblePanel1);
+        invisiblePanel1.add(nameLabel);
+        nameLabel.setBounds(150,10,220,150);
         midScreen.add(nameField);
-        midScreen.add(genreLabel);
+
+        midScreen.add(invisiblePanel2);
+        invisiblePanel2.add(genreLabel);
+        genreLabel.setBounds(200,8,200,148);
         midScreen.add(genreField);
-        midScreen.add(priceLabel);
+
+        midScreen.add(invisiblePanel3);
+        invisiblePanel3.add(priceLabel);
+        priceLabel.setBounds(200,8,200,150);
         midScreen.add(priceField);
 
         Vector<String> columnNames = new Vector<>();
@@ -122,6 +145,7 @@ public class manageBooksFrame extends JFrame {
 
         tableModel.setDataVector(dataVector, columnNames);
     }
+
 
 
 }
