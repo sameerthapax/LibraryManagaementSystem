@@ -13,6 +13,7 @@ public class LibraryDatabase {
     private static final Map<Integer, Book> books = new HashMap<>();
     private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
     static generateRandomBookId bookId1 = new generateRandomBookId();
+
     static {
         // Add default admin user
         addUser(new User("admin", "admin"));
@@ -27,7 +28,6 @@ public class LibraryDatabase {
     public static User getUser(int userId) {
         return users.get(userId);
     }
-
 
 
     public static boolean removeUser(int userId) {
@@ -46,8 +46,7 @@ public class LibraryDatabase {
         }
         return false;
     }
-    
-    
+
 
     public static boolean updatePassword(int userId, String newPassword) {
         User user = users.get(userId);
@@ -65,9 +64,6 @@ public class LibraryDatabase {
     }
 
 
-
-
-
     public static void create() {
         // Add three default books to the database
 
@@ -77,14 +73,14 @@ public class LibraryDatabase {
     }
 
 
-
     public static void addBook(Book book) {
-        books.put( book.bid, book);
+        books.put(book.bid, book);
     }
 
     public static Map<Integer, Book> getBooks() {
         return books;
     }
+
     public static Vector<Vector<Object>> getBookDataVector() {
         Vector<Vector<Object>> dataVector = new Vector<>();
         for (Book book : books.values()) {
@@ -97,6 +93,7 @@ public class LibraryDatabase {
         }
         return dataVector;
     }
+
     public static void issueBook(String username, int bookId, String issuedDate, int period) {
         Book book = books.get(bookId);
         User user = users.get(username);
@@ -119,6 +116,10 @@ public class LibraryDatabase {
         }
     }
 
+    public static IssuedBook getIssuedBookDetails(int bookId) {
+        return issuedBooks.get(bookId);
+    }
+
     public static boolean isBookAvailable(int bookId) {
         Book book = books.get(bookId);
         return book != null && !book.isIssued;
@@ -132,19 +133,66 @@ public class LibraryDatabase {
         return null;
     }
 
-}
-class IssuedBook {
-    String username;
-    int bookId;
-    String issuedDate;
-    String returnDate;
+    public static void returnBook(int bookId) {
+        IssuedBook issuedBook = issuedBooks.get(bookId);
+        if (issuedBook == null) {
+            throw new IllegalStateException("Book was not issued.");
+        }
 
-    public IssuedBook(String username, int bookId, String issuedDate, String returnDate) {
-        this.username = username;
-        this.bookId = bookId;
-        this.issuedDate = issuedDate;
-        this.returnDate = returnDate;
+        // Mark the book as not issued
+        Book book = books.get(bookId);
+        if (book != null) {
+            book.isIssued = false;
+        }
+
+
     }
 
-    // Getters and setters
+    static class IssuedBook {
+        String username;
+        int bookId;
+        String issuedDate;
+        String returnDate;
+
+        public IssuedBook(String username, int bookId, String issuedDate, String returnDate) {
+            this.username = username;
+            this.bookId = bookId;
+            this.issuedDate = issuedDate;
+            this.returnDate = returnDate;
+        }
+
+        // Getters
+        public String getUsername() {
+            return username;
+        }
+
+        public int getBookId() {
+            return bookId;
+        }
+
+        public String getIssuedDate() {
+            return issuedDate;
+        }
+
+        public String getReturnDate() {
+            return returnDate;
+        }
+
+        // Setters
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public void setBookId(int bookId) {
+            this.bookId = bookId;
+        }
+
+        public void setIssuedDate(String issuedDate) {
+            this.issuedDate = issuedDate;
+        }
+
+        public void setReturnDate(String returnDate) {
+            this.returnDate = returnDate;
+        }
+    }
 }

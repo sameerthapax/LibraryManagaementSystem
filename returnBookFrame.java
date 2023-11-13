@@ -50,9 +50,9 @@ public class returnBookFrame extends JFrame {
             LocalDate returnDate = LocalDate.parse(returnDateField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
 
             // Assuming LibraryDatabase has a method to get the issued book details
-            IssuedBook issuedBook = LibraryDatabase.getIssuedBook(bookId);
+            LibraryDatabase.IssuedBook issuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
             if (issuedBook != null) {
-                LocalDate dueDate = LocalDate.parse(issuedBook.getDueDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+                LocalDate dueDate = LocalDate.parse(issuedBook.getReturnDate(), DateTimeFormatter.ISO_LOCAL_DATE);
                 long daysOverdue = ChronoUnit.DAYS.between(dueDate, returnDate);
                 double fine = calculateFine(daysOverdue);
 
