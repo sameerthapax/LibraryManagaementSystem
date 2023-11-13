@@ -18,10 +18,6 @@ public class LibraryDatabase {
         addUser(new User("admin", "admin"));
     }
 
-    static {
-        // Add default admin user
-        addUser(new User("admin", "admin"));
-    }
 
     public static boolean addUser(User user) {
         users.put(user.getUsername(), user); // Store user by username
@@ -118,6 +114,18 @@ public class LibraryDatabase {
         }
 
 
+    }
+
+    public static boolean updateUsername(int userId, String newUsername) {
+        return true;
+    }
+
+    public static boolean updatePassword(int userId, String newPassword) {
+        return true;
+    }
+
+    public static boolean removeUser(int userId) {
+        return true;
     }
 
     static class IssuedBook {
