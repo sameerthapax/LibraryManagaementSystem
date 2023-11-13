@@ -13,55 +13,27 @@ public class LibraryDatabase {
     private static final Map<Integer, Book> books = new HashMap<>();
     private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
     static generateRandomBookId bookId1 = new generateRandomBookId();
+    static {
+        // Add default admin user
+        addUser(new User("admin", "admin"));
+    }
 
     static {
         // Add default admin user
         addUser(new User("admin", "admin"));
     }
 
-
     public static boolean addUser(User user) {
         users.put(user.getUsername(), user); // Store user by username
         return false;
     }
 
-    public static User getUser(int userId) {
-        return users.get(userId);
-    }
-
-
-    public static boolean removeUser(int userId) {
-        if (users.containsKey(userId)) {
-            users.remove(userId);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean updateUsername(int userId, String newUsername) {
-        User user = users.get(userId);
-        if (user != null) {
-            user.setUsername(newUsername);
-            return true;
-        }
-        return false;
-    }
-
-
-    public static boolean updatePassword(int userId, String newPassword) {
-        User user = users.get(userId);
-        if (user != null) {
-            user.setPassword(newPassword);
-            return true;
-        }
-        return false;
-    }
-
-
     public static boolean authenticate(String username, String password) {
         User user = users.get(username);
         return user != null && user.getPassword().equals(password); // Compare password
     }
+
+
 
 
     public static void create() {
