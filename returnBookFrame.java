@@ -1,40 +1,90 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 public class returnBookFrame extends JFrame {
-    public returnBookFrame() {
-        setTitle("Manage Members");
-        setSize(1000,1100); // Set the size of the frame
-        setLocationRelativeTo(null); // Center the frame
+    private JTextField bookIdField, returnDateField;
+    private JButton returnButton;
+    private JTextArea resultArea;
+
+  public returnBookFrame() {
+        setTitle("Return Book");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(null);// Set up the layout
-        // Add content to this frame (e.g., a form to add/edit books)
-        // For now, we'll just add a label to indicate this is the Manage Books frame
-        JLabel label = new JLabel("Return Book management operations will go here", SwingConstants.CENTER);
-        ImageIcon homeIcon = new ImageIcon("home.png");
+        setLayout(new FlowLayout());
 
-        JButton home = new JButton(homeIcon);//creating new button for going back to home
-        home.addActionListener(e -> {new LibraryHomeScreen();
-            dispose();});
-        add(home);
-        home.setBounds(930,700,64,64);
-        add(label);
+        add(new JLabel("Book ID:"));
+        bookIdField = new JTextField(20);
+        add(bookIdField);
 
-        JLabel title = new JLabel("Return Book");
-        Font titleFont = new Font("Aharoni", Font.BOLD,58);
-        title.setFont(titleFont);
+        add(new JLabel("Return Date (YYYY-MM-DD):"));
+        returnDateField = new JTextField(20);
+        add(returnDateField);
 
-        title.setBounds(300,5,500,80);
-        add(title);
+        returnButton = new JButton("Return Book");
+        add(returnButton);
 
-        JPanel  midScreen = new JPanel();
-        midScreen.setSize(300,300);
-        midScreen.setBounds(50,50,900,700);
-        midScreen.setBackground(Color.PINK);
+        resultArea = new JTextArea(5, 30);
+        resultArea.setEditable(false);
+        add(new JScrollPane(resultArea));
 
-        add(midScreen);
-        // Make the frame visible
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                returnBook();
+            }
+        });
+
         setVisible(true);
     }
+
+    private void returnBook() {
+        try {
+            int bookId = Integer.parseInt(bookIdField.getText());
+            LocalDate returnDate = LocalDate.parse(returnDateField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
+
+            // Assuming LibraryDatabase has a method to get the issued book details
+            IssuedBook issuedBook = LibraryDatabase.getIssuedBook(bookId);
+            if (issuedBook != null) {
+                LocalDate dueDate = LocalDate.parse(issuedBook.getDueDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+                long daysOverdue = ChronoUnit.DAYS.between(dueDate, returnDate);
+                double fine = calculateFine(daysOverdue);
+
+                // Assuming LibraryDatabase has a method to process book return
+                LibraryDatabase.returnBook(bookId);
+
+                resultArea.setText("Book returned successfully.\n");
+                if (fine > 0) {
+                    resultArea.append("Fine imposed: $" + fine);
+                } else {
+                    resultArea.append("No fine imposed.");
+                }
+            } else {
+                resultArea.setText("Book not found or not issued.");
+            }
+        } catch (NumberFormatException | DateTimeParseException ex) {
+            resultArea.setText("Invalid input.");
+        }
+    }
+
+    private double calculateFine(long daysOverdue) {
+        final double dailyFineRate = 0.50; // Example fine rate
+        if (daysOverdue > 0) {
+            return daysOverdue * dailyFineRate;
+        }
+        return 0;
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        new returnBookFrame();
+    }
 }
+
 
