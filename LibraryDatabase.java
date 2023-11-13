@@ -66,16 +66,6 @@ public class LibraryDatabase {
 
 
 
-    public static void addUser(User user) {
-        users.put(user.getUsername(), user); // Store user by username
-    }
-
-    public static boolean authenticate(String username, String password) {
-        User user = users.get(username);
-        return user != null && user.getPassword().equals(password); // Compare password
-    }
-
-
 
 
     public static void create() {
@@ -136,6 +126,10 @@ public class LibraryDatabase {
 
     public static boolean isUserValid(String userId) {
         return users.containsKey(userId);
+    }
+
+    public static Map<Integer, User> getUsers() {
+        return null;
     }
 
 }

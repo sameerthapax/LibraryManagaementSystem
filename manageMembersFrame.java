@@ -1,13 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+
+import java.util.Map;
 import java.util.Vector;
 
 
 public class manageMembersFrame extends JFrame {
     private JTextField userIdField, usernameField;
     private JPasswordField passwordField;
-    private JButton addButton, viewButton, updateButton, removeButton;
+    private JButton addButton, updateButton, removeButton;
     private JTextArea memberDetailsArea;
     private JTable memberTable;
     private DefaultTableModel tableModel;
@@ -54,12 +56,10 @@ public class manageMembersFrame extends JFrame {
         midScreen.add(new JLabel("Password:")); // Consider using JPasswordField for real applications
         midScreen.add(passwordField);
 
-        addButton = new JButton("Add Member");
-        viewButton = new JButton("View Member");
+        addButton = new JButton("Register");
         updateButton = new JButton("Update Member");
         removeButton = new JButton("Remove Member");
         midScreen.add(addButton);
-        midScreen.add(viewButton);
         midScreen.add(updateButton);
         midScreen.add(removeButton);
 
@@ -80,18 +80,16 @@ public class manageMembersFrame extends JFrame {
 
 
         addButton.addActionListener(e -> addMember());
-        viewButton.addActionListener(e -> viewMember());
         updateButton.addActionListener(e -> updateMember());
         removeButton.addActionListener(e -> removeMember());
         // Make the frame visible
         setVisible(true);
     }
 
-    private Vector<Vector<Object>> getMemberDataVector() {
+      private Vector<Vector<Object>> getMemberDataVector() {
         Vector<Vector<Object>> dataVector = new Vector<>();
-        return dataVector;
-    }
-
+       return dataVector;
+      }
     private void addMember() {
         String username = usernameField.getText();
         String password = passwordField.getText(); // Hash password in real application
@@ -104,19 +102,7 @@ public class manageMembersFrame extends JFrame {
         }
     }
 
-    private void viewMember() {
-        try {
-            int userId = Integer.parseInt(userIdField.getText());
-            User user = LibraryDatabase.getUser(userId);
-            if (user != null) {
-                memberDetailsArea.setText("User ID: " + user.getUserId() + "\nUsername: " + user.getUsername());
-            } else {
-                memberDetailsArea.setText("Member not found.");
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid User ID");
-        }
-    }
+  
     private void updateMember() {
         try {
             int userId = Integer.parseInt(userIdField.getText());
@@ -151,5 +137,77 @@ public class manageMembersFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Invalid User ID");
         }
 }
+
+    public JTextField getUserIdField() {
+        return userIdField;
+    }
+
+    public void setUserIdField(JTextField userIdField) {
+        this.userIdField = userIdField;
+    }
+
+    public JTextField getUsernameField() {
+        return usernameField;
+    }
+
+    public void setUsernameField(JTextField usernameField) {
+        this.usernameField = usernameField;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
+    }
+
+    public void setPasswordField(JPasswordField passwordField) {
+        this.passwordField = passwordField;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public JButton getUpdateButton() {
+        return updateButton;
+    }
+
+    public void setUpdateButton(JButton updateButton) {
+        this.updateButton = updateButton;
+    }
+
+    public JButton getRemoveButton() {
+        return removeButton;
+    }
+
+    public void setRemoveButton(JButton removeButton) {
+        this.removeButton = removeButton;
+    }
+
+    public JTextArea getMemberDetailsArea() {
+        return memberDetailsArea;
+    }
+
+    public void setMemberDetailsArea(JTextArea memberDetailsArea) {
+        this.memberDetailsArea = memberDetailsArea;
+    }
+
+    public JTable getMemberTable() {
+        return memberTable;
+    }
+
+    public void setMemberTable(JTable memberTable) {
+        this.memberTable = memberTable;
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+
+    public void setTableModel(DefaultTableModel tableModel) {
+        this.tableModel = tableModel;
+    }
 }
 
