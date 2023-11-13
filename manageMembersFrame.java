@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
-
 import java.util.Map;
 import java.util.Vector;
 
@@ -92,8 +91,7 @@ public class manageMembersFrame extends JFrame {
       }
     private void addMember() {
         String username = usernameField.getText();
-        String password = passwordField.getText(); // Hash password in real application
-        // Assuming LibraryDatabase.addUser() adds a user and returns a boolean
+        String password = passwordField.getText(); 
         boolean success = LibraryDatabase.addUser(new User(username, password));
         if (success) {
             JOptionPane.showMessageDialog(this, "Member added successfully.");

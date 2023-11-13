@@ -18,6 +18,14 @@ public class returnBookFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
+        JLabel label = new JLabel();
+        ImageIcon homeIcon = new ImageIcon("home.png");
+
+        JButton home = new JButton(homeIcon);//creating new button for going back to home
+        home.addActionListener(e -> {new LibraryHomeScreen();
+            dispose();});
+        
+        add(label);
 
         add(new JLabel("Book ID:"));
         bookIdField = new JTextField(20);
@@ -39,7 +47,9 @@ public class returnBookFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 returnBook();
             }
+            
         });
+        add(home);
 
         setVisible(true);
     }
@@ -80,7 +90,7 @@ public class returnBookFrame extends JFrame {
         }
         return 0;
     }
-
+    
 
 }
 
