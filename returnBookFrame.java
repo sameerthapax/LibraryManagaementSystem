@@ -81,10 +81,7 @@ public class returnBookFrame extends JFrame {
         return 0;
     }
 
-    // Main method for testing
-    public static void main(String[] args) {
-        new returnBookFrame();
-    }
+
 }
 
 
