@@ -42,13 +42,7 @@ public class returnBookFrame extends JFrame {
         resultArea.setEditable(false);
         add(new JScrollPane(resultArea));
 
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                returnBook();
-            }
-            
-        });
+        returnButton.addActionListener(e -> returnBook());
         add(home);
 
         setVisible(true);
