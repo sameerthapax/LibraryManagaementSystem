@@ -52,15 +52,11 @@ public class returnBookFrame extends JFrame {
         try {
             int bookId = Integer.parseInt(bookIdField.getText());
             LocalDate returnDate = LocalDate.parse(returnDateField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
-
-            // Assuming LibraryDatabase has a method to get the issued book details
             LibraryDatabase.IssuedBook issuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
             if (issuedBook != null) {
                 LocalDate dueDate = LocalDate.parse(issuedBook.getReturnDate(), DateTimeFormatter.ISO_LOCAL_DATE);
                 long daysOverdue = ChronoUnit.DAYS.between(dueDate, returnDate);
                 double fine = calculateFine(daysOverdue);
-
-                // Assuming LibraryDatabase has a method to process book return
                 LibraryDatabase.returnBook(bookId);
 
                 resultArea.setText("Book returned successfully.\n");
