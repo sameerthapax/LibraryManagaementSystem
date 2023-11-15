@@ -20,8 +20,7 @@ public class manageMembersFrame extends JFrame {
         setLocationRelativeTo(null); // Center the frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);// Set up the layout
-        // Add content to this frame (e.g., a form to add/edit books)
-        // For now, we'll just add a label to indicate this is the Manage Books frame
+
         JLabel label = new JLabel("Members management operations will go here", SwingConstants.CENTER);
         ImageIcon homeIcon = new ImageIcon("home.png");
 
@@ -62,11 +61,8 @@ public class manageMembersFrame extends JFrame {
         midScreen.add(updateButton);
         midScreen.add(removeButton);
 
-        Vector<String> columnNames = new Vector<>();
-        columnNames.add("User ID");
-        columnNames.add("Username");
+        Vector<String> columnNames = getColumnNames();
         
-
         
         tableModel = new DefaultTableModel(getMemberDataVector(), columnNames);
         memberTable = new JTable(tableModel);
@@ -87,6 +83,13 @@ public class manageMembersFrame extends JFrame {
 
       private Vector<Vector<Object>> getMemberDataVector() {
         Vector<Vector<Object>> dataVector = new Vector<>();
+        Map<Integer, User> users = LibraryDatabase.getUsers();
+        for (User user : users.values()) {
+            Vector<Object> row = new Vector<>();
+            row.add(user.getUserId());
+            row.add(user.getUsername());
+            dataVector.add(row);
+        }
        return dataVector;
       }
     private void addMember() {
@@ -108,13 +111,14 @@ public class manageMembersFrame extends JFrame {
             String newPassword = new String(passwordField.getPassword());
 
             // Update username and password separately
-            boolean usernameUpdated = LibraryDatabase.updateUsername(userId, newUsername);
-            boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword);
+            boolean usernameUpdated = LibraryDatabase.updateUsername(userId, newUsername, newPassword);
+            boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword, newPassword);
 
             if (usernameUpdated && passwordUpdated) {
-                memberDetailsArea.setText("Member updated successfully.");
+                updateTable();
+                JOptionPane.showMessageDialog(this, "Member updated successfully.");
             } else {
-                memberDetailsArea.setText("Failed to update member.");
+                JOptionPane.showMessageDialog(this, "Failed to update member.");
             }
         } catch (NumberFormatException ex) {
             memberDetailsArea.setText("Invalid user ID.");
@@ -127,6 +131,7 @@ public class manageMembersFrame extends JFrame {
             int userId = Integer.parseInt(userIdField.getText());
             boolean success = LibraryDatabase.removeUser(userId);
             if (success) {
+                removeRowFromTable(userId);
                 JOptionPane.showMessageDialog(this, "Member removed successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to remove member.");
@@ -134,6 +139,29 @@ public class manageMembersFrame extends JFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid User ID");
         }
+}
+private void updateTable() {
+    tableModel.getDataVector().removeAllElements();
+    tableModel.fireTableDataChanged();
+    Vector<Vector<Object>> newDataVector = getMemberDataVector();
+    for (Vector<Object> row : newDataVector) {
+        tableModel.addRow(row);
+    }
+}
+
+private void removeRowFromTable(int userId) {
+    for (int i = 0; i < tableModel.getRowCount(); i++) {
+        if ((int) tableModel.getValueAt(i, 0) == userId) {
+            tableModel.removeRow(i);
+            break;
+        }
+    }
+}
+private Vector<String> getColumnNames() {
+    Vector<String> columnNames = new Vector<>();
+    columnNames.add("User ID");
+    columnNames.add("Username");
+    return columnNames;
 }
 
     public JTextField getUserIdField() {

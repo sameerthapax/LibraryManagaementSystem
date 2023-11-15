@@ -17,7 +17,7 @@ public class User {
         
     }
 
-    public void BorrowBook(int bookId){
+    public void borrowBook(int bookId){
         borrowedBooks.add(bookId);
     }
 
@@ -26,8 +26,6 @@ public class User {
     }
 
 
-
-    // Getters and Setters
     public int getUserId() {
         return userId;
     }
@@ -48,7 +46,12 @@ public class User {
         this.password = password; // In a real application, hash the password
     }
 
-    public Set<Integer> getBorrowedBooks(){
-        return new HashSet <> (borrowedBooks);
+    public Set<Integer> getBorrowedBooks() {
+        return new HashSet<>(borrowedBooks);
+    }
+
+    @Override
+    public String toString() {
+        return "User ID: " + userId + ", Username: " + username;
     }
 }

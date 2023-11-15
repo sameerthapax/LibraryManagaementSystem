@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JTextField;
+
 public class LibraryDatabase {
     private static int userCount = 0;
     private static int bookCount = 0;
@@ -21,7 +23,7 @@ public class LibraryDatabase {
 
     public static boolean addUser(User user) {
         users.put(user.getUsername(), user); // Store user by username
-        return false;
+        return true;
     }
 
     public static boolean authenticate(String username, String password) {
@@ -33,11 +35,9 @@ public class LibraryDatabase {
 
 
     public static void create() {
-        // Add three default books to the database
-
-        addBook(new Book(bookId1.generaterandombook(), "1984", "Dystopian", 15));
-        addBook(new Book(bookId1.generaterandombook(), "To Kill a Mockingbird", "Classic", 12));
-        addBook(new Book(bookId1.generaterandombook(), "The Great Gatsby", "Classic", 10));
+    addBook(new Book(bookId1.generaterandombook(), "1984", "Dystopian", 15));
+    addBook(new Book(bookId1.generaterandombook(), "To Kill a Mockingbird", "Classic", 12));
+    addBook(new Book(bookId1.generaterandombook(), "The Great Gatsby", "Classic", 10));
     }
 
 
@@ -116,16 +116,29 @@ public class LibraryDatabase {
 
     }
 
-    public static boolean updateUsername(int userId, String newUsername) {
-        return true;
+    public static boolean updateUsername(int userId, String  oldUsername, String newUsername) {
+        User user = users.remove(oldUsername);
+        if (user != null) {
+            user.setUsername(newUsername);
+            users.put(newUsername, user);
+            return true;
+        }
+        return false;
+    
     }
 
-    public static boolean updatePassword(int userId, String newPassword) {
-        return true;
+    public static boolean updatePassword(int userId, String newPassword, String username) {
+        User user = users.get(username);
+        if (user != null) {
+            user.setPassword(newPassword);
+            return true;
+        }
+        return false;
     }
 
-    public static boolean removeUser(int userId) {
-        return true;
+    public static boolean removeUser(int userId, String username, String newPassword) {
+        User user = users.remove(username);
+        return user != null;  
     }
 
     static class IssuedBook {
@@ -175,4 +188,9 @@ public class LibraryDatabase {
             this.returnDate = returnDate;
         }
     }
+
+    public static boolean removeUser(int userId) {
+        return false;
+    }
 }
+   
