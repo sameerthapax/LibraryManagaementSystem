@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class LibraryDatabase {
     private static int userCount = 0;
@@ -15,10 +15,7 @@ public class LibraryDatabase {
     private static final Map<Integer, Book> books = new HashMap<>();
     private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
     static generateRandomBookId bookId1 = new generateRandomBookId();
-    static {
-        // Add default admin user
-        addUser(new User("admin", "admin"));
-    }
+
 
 
     public static boolean addUser(User user) {
@@ -61,6 +58,16 @@ public class LibraryDatabase {
         }
         return dataVector;
     }
+    public static Vector<Vector<Object>> getMemberDataVector() {
+        Vector<Vector<Object>> dataVector = new Vector<>();
+        for (User user : users.values()) {
+                Vector<Object> row = new Vector<>();
+                row.add(user.getUserId());
+                row.add(user.getUsername());
+                dataVector.add(row);
+            }
+        return dataVector;
+    }
 
     public static void issueBook(String username, int bookId, String issuedDate, int period) {
         Book book = books.get(bookId);
@@ -97,9 +104,10 @@ public class LibraryDatabase {
         return users.containsKey(userId);
     }
 
-    public static Map<Integer, User> getUsers() {
-        return null;
+    public static Map<String, User> getUsers() {
+        return new HashMap<>(users); // Return a copy of the users map
     }
+
 
     public static void returnBook(int bookId) {
         IssuedBook issuedBook = issuedBooks.get(bookId);
@@ -189,8 +197,9 @@ public class LibraryDatabase {
         }
     }
 
-    public static boolean removeUser(int userId) {
-        return false;
+    public static boolean removeUser(String username) {
+        users.remove(username);
+        return true;
     }
 }
    

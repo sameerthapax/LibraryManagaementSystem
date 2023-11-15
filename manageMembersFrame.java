@@ -12,6 +12,8 @@ public class manageMembersFrame extends JFrame {
     private JTextArea memberDetailsArea;
     private JTable memberTable;
     private DefaultTableModel tableModel;
+    JTable bookTable;
+
 
 
     public manageMembersFrame() {
@@ -64,7 +66,7 @@ public class manageMembersFrame extends JFrame {
         Vector<String> columnNames = getColumnNames();
         
         
-        tableModel = new DefaultTableModel(getMemberDataVector(), columnNames);
+        tableModel = new DefaultTableModel(LibraryDatabase.getMemberDataVector(), columnNames);
         memberTable = new JTable(tableModel);
         memberTable.setFillsViewportHeight(true);
 
@@ -81,17 +83,7 @@ public class manageMembersFrame extends JFrame {
         setVisible(true);
     }
 
-      private Vector<Vector<Object>> getMemberDataVector() {
-        Vector<Vector<Object>> dataVector = new Vector<>();
-        Map<Integer, User> users = LibraryDatabase.getUsers();
-        for (User user : users.values()) {
-            Vector<Object> row = new Vector<>();
-            row.add(user.getUserId());
-            row.add(user.getUsername());
-            dataVector.add(row);
-        }
-       return dataVector;
-      }
+
     private void addMember() {
         String username = usernameField.getText();
         String password = passwordField.getText(); 
@@ -101,6 +93,7 @@ public class manageMembersFrame extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add member.");
         }
+        refreshMemberList();
     }
 
   
@@ -115,7 +108,7 @@ public class manageMembersFrame extends JFrame {
             boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword, newPassword);
 
             if (usernameUpdated && passwordUpdated) {
-                updateTable();
+                refreshMemberList();
                 JOptionPane.showMessageDialog(this, "Member updated successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update member.");
@@ -128,11 +121,11 @@ public class manageMembersFrame extends JFrame {
 
     private void removeMember() {
         try {
-            int userId = Integer.parseInt(userIdField.getText());
-            boolean success = LibraryDatabase.removeUser(userId);
+            String username = usernameField.getText();
+            boolean success = LibraryDatabase.removeUser(username);
             if (success) {
-                removeRowFromTable(userId);
                 JOptionPane.showMessageDialog(this, "Member removed successfully.");
+                refreshMemberList();
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to remove member.");
             }
@@ -143,11 +136,12 @@ public class manageMembersFrame extends JFrame {
 private void updateTable() {
     tableModel.getDataVector().removeAllElements();
     tableModel.fireTableDataChanged();
-    Vector<Vector<Object>> newDataVector = getMemberDataVector();
+    Vector<Vector<Object>> newDataVector = LibraryDatabase.getMemberDataVector();
     for (Vector<Object> row : newDataVector) {
         tableModel.addRow(row);
     }
 }
+
 
 private void removeRowFromTable(int userId) {
     for (int i = 0; i < tableModel.getRowCount(); i++) {
@@ -157,6 +151,16 @@ private void removeRowFromTable(int userId) {
         }
     }
 }
+
+public void refreshMemberList() {
+        Vector<Vector<Object>> dataVector = LibraryDatabase.getMemberDataVector();
+        Vector<String> columnName = new Vector<>();
+
+        columnName.add("User Id");
+        columnName.add("Username");
+
+        tableModel.setDataVector(dataVector, columnName );
+    }
 private Vector<String> getColumnNames() {
     Vector<String> columnNames = new Vector<>();
     columnNames.add("User ID");
@@ -235,5 +239,6 @@ private Vector<String> getColumnNames() {
     public void setTableModel(DefaultTableModel tableModel) {
         this.tableModel = tableModel;
     }
+
 }
 
