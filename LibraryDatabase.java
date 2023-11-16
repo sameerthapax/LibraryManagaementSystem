@@ -100,8 +100,8 @@ public class LibraryDatabase {
         return book != null && !book.isIssued;
     }
 
-    public static boolean isUserValid(String userId) {
-        return users.containsKey(userId);
+    public static boolean isUserValid(String username) {
+        return users.containsKey(username);
     }
 
     public static Map<String, User> getUsers() {
@@ -124,25 +124,23 @@ public class LibraryDatabase {
 
     }
 
-    public static boolean updateUsername(int userId, String  oldUsername, String newUsername) {
-        User user = users.remove(oldUsername);
-        if (user != null) {
+    public static boolean updateUsername(int userId, String newUsername){
+        User user = users.get(userId);
+        if (user!= null){
             user.setUsername(newUsername);
-            users.put(newUsername, user);
             return true;
         }
         return false;
-    
+    }
+ public static boolean updatePassword(int userId, String newPassword){
+        User user = users.get(userId);
+        if (user!= null){
+            user.setUsername(newPassword);
+            return true;
+        }
+        return false;
     }
 
-    public static boolean updatePassword(int userId, String newPassword, String username) {
-        User user = users.get(username);
-        if (user != null) {
-            user.setPassword(newPassword);
-            return true;
-        }
-        return false;
-    }
 
     public static boolean removeUser(int userId, String username, String newPassword) {
         User user = users.remove(username);
@@ -200,6 +198,10 @@ public class LibraryDatabase {
     public static boolean removeUser(String username) {
         users.remove(username);
         return true;
+    }
+
+    public static boolean isUseridValid(int userId) {
+        return users.containsKey(userId);
     }
 }
    

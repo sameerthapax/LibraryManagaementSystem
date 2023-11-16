@@ -56,11 +56,11 @@ public class manageMembersFrame extends JFrame {
         midScreen.add(new JLabel("Password:")); // Consider using JPasswordField for real applications
         midScreen.add(passwordField);
 
-        addButton = new JButton("Register");
         updateButton = new JButton("Update Member");
+        addButton = new JButton("Register");
         removeButton = new JButton("Remove Member");
-        midScreen.add(addButton);
         midScreen.add(updateButton);
+        midScreen.add(addButton);
         midScreen.add(removeButton);
 
         Vector<String> columnNames = getColumnNames();
@@ -76,8 +76,8 @@ public class manageMembersFrame extends JFrame {
         midScreen.add(scrollPane);
 
 
-        addButton.addActionListener(e -> addMember());
         updateButton.addActionListener(e -> updateMember());
+        addButton.addActionListener(e -> addMember());
         removeButton.addActionListener(e -> removeMember());
         // Make the frame visible
         setVisible(true);
@@ -100,24 +100,40 @@ public class manageMembersFrame extends JFrame {
     private void updateMember() {
         try {
             int userId = Integer.parseInt(userIdField.getText());
-            String newUsername = usernameField.getText();
-            String newPassword = new String(passwordField.getPassword());
+        if (LibraryDatabase.isUseridValid(userId)) {
+            // Prompt the user for a new username
+            String newUsername = JOptionPane.showInputDialog(this, "Enter new username:");
+            if (newUsername != null) { 
+                // Prompt the user for a new password
+                JPasswordField passwordField = new JPasswordField();
+                Object[] passwordPanel = {"Enter new password:", passwordField};
+                int passwordResult = JOptionPane.showConfirmDialog(this, passwordPanel, "Password", JOptionPane.OK_CANCEL_OPTION);
+                
+                if (passwordResult == JOptionPane.OK_OPTION) {
+                    // User clicked OK, get the entered password
+                    char[] newPasswordChars = passwordField.getPassword();
+                    String newPassword = new String(newPasswordChars);
 
-            // Update username and password separately
-            boolean usernameUpdated = LibraryDatabase.updateUsername(userId, newUsername, newPassword);
-            boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword, newPassword);
-
-            if (usernameUpdated && passwordUpdated) {
-                refreshMemberList();
-                JOptionPane.showMessageDialog(this, "Member updated successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update member.");
+                    // Update username and password separately
+                    boolean usernameUpdated = LibraryDatabase.updateUsername(userId, newUsername);
+                    boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword);
+                    refreshMemberList();
+                    if (usernameUpdated && passwordUpdated) {
+                        JOptionPane.showMessageDialog(this, "Member updated successfully.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Failed to update member.");
+                    }
+                }
             }
-        } catch (NumberFormatException ex) {
-            memberDetailsArea.setText("Invalid user ID.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid User ID.");
         }
+    } catch (NumberFormatException ex) {
+        memberDetailsArea.setText("Invalid user ID.");
     }
-   
+}
+            
+            
 
     private void removeMember() {
         try {
