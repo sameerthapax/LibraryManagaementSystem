@@ -6,46 +6,51 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+/**
+ * Represents the database functionality for a library system.
+ */
 public class LibraryDatabase {
+    // Counters for users, books, and issued books
     private static int userCount = 0;
     private static int bookCount = 0;
     private static int issuedCount = 0;
 
+    // Maps to store users, books, and issued books
     private static final Map<String, User> users = new HashMap<>();
     private static final Map<Integer, Book> books = new HashMap<>();
     private static final Map<Integer, IssuedBook> issuedBooks = new HashMap<>();
-    static generateRandomBookId bookId1 = new generateRandomBookId();
+    private static generateRandomBookId bookIdGenerator = new generateRandomBookId();
 
-
-
+    // Method to add a user
     public static boolean addUser(User user) {
         users.put(user.getUsername(), user); // Store user by username
         return true;
     }
 
+    // Method for user authentication
     public static boolean authenticate(String username, String password) {
         User user = users.get(username);
         return user != null && user.getPassword().equals(password); // Compare password
     }
 
-
-
-
+    // Method to initialize the database with some books
     public static void create() {
-    addBook(new Book(bookId1.generaterandombook(), "1984", "Dystopian", 15));
-    addBook(new Book(bookId1.generaterandombook(), "To Kill a Mockingbird", "Classic", 12));
-    addBook(new Book(bookId1.generaterandombook(), "The Great Gatsby", "Classic", 10));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "1984", "Dystopian", 15));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "To Kill a Mockingbird", "Classic", 12));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Great Gatsby", "Classic", 10));
     }
 
-
+    // Method to add a book
     public static void addBook(Book book) {
         books.put(book.bid, book);
     }
 
+    // Getter for books map
     public static Map<Integer, Book> getBooks() {
         return books;
     }
 
+    // Method to get a data vector of books for GUI display
     public static Vector<Vector<Object>> getBookDataVector() {
         Vector<Vector<Object>> dataVector = new Vector<>();
         for (Book book : books.values()) {
@@ -58,17 +63,20 @@ public class LibraryDatabase {
         }
         return dataVector;
     }
+
+    // Method to get a data vector of members for GUI display
     public static Vector<Vector<Object>> getMemberDataVector() {
         Vector<Vector<Object>> dataVector = new Vector<>();
         for (User user : users.values()) {
-                Vector<Object> row = new Vector<>();
-                row.add(user.getUserId());
-                row.add(user.getUsername());
-                dataVector.add(row);
-            }
+            Vector<Object> row = new Vector<>();
+            row.add(user.getUserId());
+            row.add(user.getUsername());
+            dataVector.add(row);
+        }
         return dataVector;
     }
 
+    // Method to issue a book
     public static void issueBook(String username, int bookId, String issuedDate, int period) {
         Book book = books.get(bookId);
         User user = users.get(username);
@@ -86,29 +94,32 @@ public class LibraryDatabase {
             issuedBooks.put(bookId, issuedBook);
         } else {
             // Handle the case where the book can't be issued
-            // This could be due to invalid user/book ID, or the book is already issued
             throw new IllegalStateException("Book cannot be issued.");
         }
     }
 
+    // Method to get issued book details
     public static IssuedBook getIssuedBookDetails(int bookId) {
         return issuedBooks.get(bookId);
     }
 
+    // Method to check if a book is available
     public static boolean isBookAvailable(int bookId) {
         Book book = books.get(bookId);
         return book != null && !book.isIssued;
     }
 
+    // Method to check if a user is valid
     public static boolean isUserValid(String username) {
         return users.containsKey(username);
     }
 
+    // Getter for users map
     public static Map<String, User> getUsers() {
         return new HashMap<>(users); // Return a copy of the users map
     }
 
-
+    // Method to return a book
     public static void returnBook(int bookId) {
         IssuedBook issuedBook = issuedBooks.get(bookId);
         if (issuedBook == null) {
@@ -120,33 +131,42 @@ public class LibraryDatabase {
         if (book != null) {
             book.isIssued = false;
         }
-
-
     }
 
+    // Method to update user's username
     public static boolean updateUsername(int userId, String newUsername){
         User user = users.get(userId);
-        if (user!= null){
+        if (user != null){
             user.setUsername(newUsername);
             return true;
         }
         return false;
     }
- public static boolean updatePassword(int userId, String newPassword){
+
+    // Method to update user's password
+    public static boolean updatePassword(int userId, String newPassword){
         User user = users.get(userId);
-        if (user!= null){
-            user.setUsername(newPassword);
+        if (user != null){
+            user.setPassword(newPassword);
             return true;
         }
         return false;
     }
 
-
-    public static boolean removeUser(int userId, String username, String newPassword) {
-        User user = users.remove(username);
-        return user != null;  
+    // Method to remove a user
+    public static boolean removeUser(String username) {
+        users.remove(username);
+        return true;
     }
 
+    // Method to check if a user ID is valid
+    public static boolean isUseridValid(int userId) {
+        return users.containsKey(userId);
+    }
+
+    /**
+     * Inner class representing an issued book.
+     */
     static class IssuedBook {
         String username;
         int bookId;
@@ -160,48 +180,6 @@ public class LibraryDatabase {
             this.returnDate = returnDate;
         }
 
-        // Getters
-        public String getUsername() {
-            return username;
-        }
 
-        public int getBookId() {
-            return bookId;
-        }
-
-        public String getIssuedDate() {
-            return issuedDate;
-        }
-
-        public String getReturnDate() {
-            return returnDate;
-        }
-
-        // Setters
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setBookId(int bookId) {
-            this.bookId = bookId;
-        }
-
-        public void setIssuedDate(String issuedDate) {
-            this.issuedDate = issuedDate;
-        }
-
-        public void setReturnDate(String returnDate) {
-            this.returnDate = returnDate;
-        }
-    }
-
-    public static boolean removeUser(String username) {
-        users.remove(username);
-        return true;
-    }
-
-    public static boolean isUseridValid(int userId) {
-        return users.containsKey(userId);
     }
 }
-   

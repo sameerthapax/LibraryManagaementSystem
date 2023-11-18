@@ -51,7 +51,7 @@ public class manageBooksFrame extends JFrame {
         invisiblePanel3.setOpaque(false);
 
 
-        Font formFieldFont = new Font("Gurmukhi MN",Font.PLAIN, 38);
+        Font formFieldFont = new Font("Gurmukhi MN", Font.PLAIN, 38);
         // Form fields
         JLabel nameLabel = new JLabel("Book Name:");
         nameLabel.setFont(formFieldFont);
@@ -68,17 +68,17 @@ public class manageBooksFrame extends JFrame {
 
         midScreen.add(invisiblePanel1);
         invisiblePanel1.add(nameLabel);
-        nameLabel.setBounds(150,10,220,150);
+        nameLabel.setBounds(150, 10, 220, 150);
         midScreen.add(nameField);
 
         midScreen.add(invisiblePanel2);
         invisiblePanel2.add(genreLabel);
-        genreLabel.setBounds(200,8,200,148);
+        genreLabel.setBounds(200, 8, 200, 148);
         midScreen.add(genreField);
 
         midScreen.add(invisiblePanel3);
         invisiblePanel3.add(priceLabel);
-        priceLabel.setBounds(200,8,200,150);
+        priceLabel.setBounds(200, 8, 200, 150);
         midScreen.add(priceField);
 
         Vector<String> columnNames = new Vector<>();
@@ -109,7 +109,7 @@ public class manageBooksFrame extends JFrame {
                 generateRandomBookId bookId = new generateRandomBookId();
 
                 // Create a new Book object
-                Book newBook = new Book(bookId.generaterandombook(), name, genre, price);
+                Book newBook = new Book(bookId.generaterandomBook(), name, genre, price);
 
                 // Add the book to the database
                 LibraryDatabase.addBook(newBook);
@@ -145,10 +145,5 @@ public class manageBooksFrame extends JFrame {
 
         tableModel.setDataVector(dataVector, columnNames);
     }
-
-
-
 }
-    // Helper method to generate a unique 5-digit Book ID
-
 

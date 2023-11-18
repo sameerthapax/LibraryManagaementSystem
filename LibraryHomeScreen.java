@@ -1,33 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class representing the main home screen of the library management system.
+ */
 public class LibraryHomeScreen extends JFrame {
 
+    /**
+     * Constructor for LibraryHomeScreen.
+     * Sets up the UI components for the frame.
+     */
     public LibraryHomeScreen() {
-        // Set the title of the window
+        // Frame setup
         setTitle("Library Management System");
-
-        // Set the default close operation
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000,1100);
-
-        // Set the layout
+        setSize(1000, 1100);
         setLayout(new BorderLayout());
-
 
         // Create a menu bar
         JMenuBar menuBar = new JMenuBar();
-
-        // Add menus to the menu bar
         JMenu fileMenu = new JMenu("File");
         JMenu helpMenu = new JMenu("Help");
 
         // Add items to the file menu
         JMenuItem exitItem = new JMenuItem("Exit");
-        fileMenu.add(exitItem);
-
-        // Add action listener to menu items
         exitItem.addActionListener(e -> System.exit(0));
+        fileMenu.add(exitItem);
 
         // Add menus to the menu bar
         menuBar.add(fileMenu);
@@ -35,84 +33,77 @@ public class LibraryHomeScreen extends JFrame {
 
         // Set the menu bar
         setJMenuBar(menuBar);
-        ImageIcon manageBooksIcon = new ImageIcon("briefcase.png");
-        // Create buttons for different actions
-        JButton btnManageBooks = new JButton("Manage Books", manageBooksIcon);
-        Font itemsFont = new Font("Monaco",Font.BOLD,14);
-        btnManageBooks.setFont(itemsFont);
-        btnManageBooks.setIconTextGap(20);
 
-
-        ImageIcon manageMembersIcon = new ImageIcon("user.png");
-
-        JButton btnManageMembers = new JButton("Manage Members", manageMembersIcon);
-        btnManageMembers.setFont(itemsFont);
-        btnManageMembers.setIconTextGap(20);
-
-        ImageIcon checkInBookIcon = new ImageIcon("check.png");
-
-        JButton btnCheckInBook = new JButton("Check In Book",checkInBookIcon);
-        btnCheckInBook.setFont(itemsFont);
-        btnCheckInBook.setIconTextGap(20);
-
-        ImageIcon returnBookIcon = new ImageIcon("return.png");
-
-        JButton btnReturnBook = new JButton("Return Book",returnBookIcon);
-        btnReturnBook.setFont(itemsFont);
-        btnReturnBook.setIconTextGap(20);
+        // Create and configure buttons
+        JButton btnManageBooks = createButton("Manage Books", "briefcase.png");
+        JButton btnManageMembers = createButton("Manage Members", "user.png");
+        JButton btnCheckInBook = createButton("Check In Book", "check.png");
+        JButton btnReturnBook = createButton("Return Book", "return.png");
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setForeground(Color.PINK);
         buttonPanel.setLayout(new GridLayout(2, 3)); // 2x2 grid with 10px padding
-
-        // Add buttons to the panel
         buttonPanel.add(btnManageBooks);
         buttonPanel.add(btnManageMembers);
         buttonPanel.add(btnCheckInBook);
         buttonPanel.add(btnReturnBook);
-        btnManageBooks.addActionListener(e -> {openManageBooks();
-            dispose();});
-        btnManageMembers.addActionListener(e -> {openManageMembers();
-            dispose();});
-        btnCheckInBook.addActionListener(e -> {openCheckInBook();
-            dispose();});
-        btnReturnBook.addActionListener(e -> {openReturnBook();
-            dispose();});
 
+        // Add action listeners to buttons
+        addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook);
 
-        // Add the button panel to the center of the layout
+        // Add the button panel to the frame
         add(buttonPanel, BorderLayout.CENTER);
 
-        // Pack the frame to fit the preferred size of its subcomponents
-
-
-        // Center the frame on the screen
+        // Center the frame on the screen and make it visible
         setLocationRelativeTo(null);
-
-        // Make the frame visible
         setVisible(true);
     }
-    private void openManageBooks() {
-        new manageBooksFrame(); // Open the Manage Books frame
 
+    /**
+     * Creates a JButton with specified text and icon.
+     *
+     * @param text Text for the button.
+     * @param iconPath Path to the icon image.
+     * @return Configured JButton.
+     */
+    private JButton createButton(String text, String iconPath) {
+        ImageIcon icon = new ImageIcon(iconPath);
+        JButton button = new JButton(text, icon);
+        button.setFont(new Font("Monaco", Font.BOLD, 14));
+        button.setIconTextGap(20);
+        return button;
     }
 
-    private void openManageMembers() {
-        new manageMembersFrame();
-    }// Open the Manage Members frame
+    /**
+     * Adds action listeners to the buttons for opening different frames.
+     *
+     * @param btnManageBooks Button to open Manage Books frame.
+     * @param btnManageMembers Button to open Manage Members frame.
+     * @param btnCheckInBook Button to open Check In Book frame.
+     * @param btnReturnBook Button to open Return Book frame.
+     */
+    private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook) {
+        btnManageBooks.addActionListener(e -> {
+            openManageBooks();
+            dispose();
+        });
+        btnManageMembers.addActionListener(e -> {
+            openManageMembers();
+            dispose();
+        });
+        btnCheckInBook.addActionListener(e -> {
+            openCheckInBook();
+            dispose();
+        });
+        btnReturnBook.addActionListener(e -> {
+            openReturnBook();
+            dispose();
+        });
+    }
 
-
-    private void openCheckInBook() {
-        new checkInBookFrame();
-    }// Open the Check In Book frame
-
-
-    private void openReturnBook() {
-        new returnBookFrame();
-    }// Open the Return Book frame
-
-
-
+    // Methods to open different frames
+    private void openManageBooks() { new manageBooksFrame(); }
+    private void openManageMembers() { new manageMembersFrame(); }
+    private void openCheckInBook() { new checkInBookFrame(); }
+    private void openReturnBook() { new returnBookFrame(); }
 }
-

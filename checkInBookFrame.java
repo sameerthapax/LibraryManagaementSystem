@@ -10,7 +10,12 @@ public class checkInBookFrame extends JFrame {
     private JButton borrowButton;
     private JPanel midScreen;
 
+    /**
+     * Constructor for CheckInBookFrame.
+     * Sets up the UI components for the frame.
+     */
     public checkInBookFrame() {
+        // Frame setup
         setTitle("Check IN Books");
         setSize(1000, 1100);
         setLocationRelativeTo(null);
@@ -34,6 +39,7 @@ public class checkInBookFrame extends JFrame {
         });
         home.setBounds(930, 700, 64, 64);
         add(home);
+
         // Initialize midScreen panel
         midScreen = new JPanel();
         midScreen.setLayout(null); // Using null layout for absolute positioning
@@ -55,37 +61,34 @@ public class checkInBookFrame extends JFrame {
         userIdLabel.setBounds(50, 150, 100, 30);
         midScreen.add(userIdLabel);
 
-
         userIdField = new JTextField();
         userIdField.setBounds(150, 150, 200, 30);
         midScreen.add(userIdField);
 
-
         // Borrow Button
         borrowButton = new JButton("Borrow Book");
         borrowButton.setBounds(150, 200, 200, 30);
-        borrowButton.addActionListener(e -> {
-            borrowBook();
-
-        });
+        borrowButton.addActionListener(e -> borrowBook());
         midScreen.add(borrowButton);
-
-
-
-
-
 
         setVisible(true);
     }
+
+    // Variables to store book ID and username
     int bookId;
     String username;
+
+    /**
+     * Handles the borrowing of a book.
+     * Checks for book availability and user validity before issuing the book.
+     */
     private void borrowBook() {
         try {
             bookId = Integer.parseInt(bookIdField.getText());
             username = userIdField.getText();
 
-            // Assuming LibraryDatabase has the necessary methods
-            if ((LibraryDatabase.isBookAvailable(bookId)) && (LibraryDatabase.isUserValid(username))){
+            // Check book availability and user validity
+            if (LibraryDatabase.isBookAvailable(bookId) && LibraryDatabase.isUserValid(username)) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), 14);
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
