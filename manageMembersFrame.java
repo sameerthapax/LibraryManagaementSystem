@@ -29,34 +29,61 @@ public class manageMembersFrame extends JFrame {
         // Adding a title label
         JLabel title = new JLabel("Members Management", SwingConstants.CENTER);
         title.setFont(new Font("Aharoni", Font.BOLD, 58));
-        title.setBounds(230, 5, 700, 80);
+        title.setBounds(140, 5, 700, 80);
         add(title);
 
         // Setting up the middle screen panel
         JPanel midScreen = new JPanel();
-        midScreen.setLayout(new GridLayout(0, 2, 10, 10));
-        midScreen.setBounds(50, 155, 900, 600);
+        midScreen.setLayout(new BorderLayout());
+        JPanel splitScreen1 = new JPanel();
+
+        midScreen.setBounds(50, 120, 900, 600);
         midScreen.setBackground(Color.PINK);
         add(midScreen);
+        midScreen.add(splitScreen1, BorderLayout.CENTER);
 
+
+        splitScreen1.setLayout(new GridLayout(0,2, 10, 10));
+        splitScreen1.setOpaque(false);
+
+        Font formFieldFont = new Font("Gurmukhi MN", Font.PLAIN, 38);
         // Adding form fields to the panel
+        JPanel fieldPanel1 = new JPanel(null);
+        fieldPanel1.setOpaque(false);
+        JPanel fieldPanel2 = new JPanel(null);
+        fieldPanel2.setOpaque(false);
+        JPanel fieldPanel3 = new JPanel(null);
+        fieldPanel3.setOpaque(false);
+        JLabel userId = new JLabel("UserId:");
+        userId.setFont(formFieldFont);
+        userId.setBounds(150,10,200,100);
+        fieldPanel1.add(userId);
         userIdField = new JTextField();
+        JLabel username = new JLabel("Username:");
+        username.setFont(formFieldFont);
+        username.setBounds(150,10,200,100);
+        fieldPanel2.add(username);
         usernameField = new JTextField();
+        JLabel password = new JLabel("Password:");
+        password.setFont(formFieldFont);
+        password.setBounds(150,10,200,100);
+        fieldPanel3.add(password);
         passwordField = new JPasswordField();
-        midScreen.add(new JLabel("User ID:"));
-        midScreen.add(userIdField);
-        midScreen.add(new JLabel("Username:"));
-        midScreen.add(usernameField);
-        midScreen.add(new JLabel("Password:"));
-        midScreen.add(passwordField);
+        splitScreen1.add(fieldPanel1);
+        splitScreen1.add(userIdField);
+        splitScreen1.add(fieldPanel2);
+        splitScreen1.add(usernameField);
+        splitScreen1.add(fieldPanel3);
+        splitScreen1.add(passwordField);
 
         // Adding buttons for member operations
         updateButton = new JButton("Update Member");
         addButton = new JButton("Register");
         removeButton = new JButton("Remove Member");
-        midScreen.add(updateButton);
-        midScreen.add(addButton);
-        midScreen.add(removeButton);
+        splitScreen1.add(updateButton);
+        splitScreen1.add(addButton);
+        splitScreen1.add(removeButton);
+
 
         // Action listeners for the buttons
         updateButton.addActionListener(e -> updateMember());
@@ -69,7 +96,7 @@ public class manageMembersFrame extends JFrame {
         memberTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(memberTable);
         scrollPane.setBounds(50, 400, 900, 300);
-        midScreen.add(scrollPane);
+        splitScreen1.add(scrollPane);
 
         // Adding home button
         ImageIcon homeIcon = new ImageIcon("home.png");
@@ -78,8 +105,7 @@ public class manageMembersFrame extends JFrame {
             new LibraryHomeScreen();
             dispose();
         });
-        home.setBounds(930, 700, 64, 64);
-        add(home);
+        midScreen.add(home,BorderLayout.AFTER_LAST_LINE);
 
         // Make the frame visible
         setVisible(true);

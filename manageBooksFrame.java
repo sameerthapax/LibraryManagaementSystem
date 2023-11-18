@@ -25,7 +25,7 @@ public class manageBooksFrame extends JFrame {
         });
         home.setBounds(930, 700, 64, 64);
         add(label);
-        add(home);
+
 
         JLabel title = new JLabel("Book Management");
         Font titleFont = new Font("Aharoni", Font.BOLD, 58);
@@ -35,9 +35,16 @@ public class manageBooksFrame extends JFrame {
         add(title);
 
         // Panel for the middle of the screen
-        JPanel midScreen = new JPanel();
-        midScreen.setLayout(new GridLayout(0, 2, 10, 10)); // Set layout for form elements
-        midScreen.setBounds(50, 150, 900, 600);
+        JPanel midScreen = new JPanel(new BorderLayout());
+        JPanel splitScreen1 = new JPanel();
+        splitScreen1.setOpaque(false);
+
+
+        midScreen.add(splitScreen1,BorderLayout.CENTER);
+        midScreen.add(home,BorderLayout.AFTER_LAST_LINE);
+
+        splitScreen1.setLayout(new GridLayout(0, 2, 10, 10)); // Set layout for form elements
+        midScreen.setBounds(50, 120, 900, 600);
         midScreen.setBackground(Color.PINK);
         add(midScreen);
 
@@ -66,20 +73,20 @@ public class manageBooksFrame extends JFrame {
 
         // Add form fields to midScreen
 
-        midScreen.add(invisiblePanel1);
+        splitScreen1.add(invisiblePanel1);
         invisiblePanel1.add(nameLabel);
         nameLabel.setBounds(150, 10, 220, 150);
-        midScreen.add(nameField);
+        splitScreen1.add(nameField);
 
-        midScreen.add(invisiblePanel2);
+        splitScreen1.add(invisiblePanel2);
         invisiblePanel2.add(genreLabel);
         genreLabel.setBounds(200, 8, 200, 148);
-        midScreen.add(genreField);
+        splitScreen1.add(genreField);
 
-        midScreen.add(invisiblePanel3);
+        splitScreen1.add(invisiblePanel3);
         invisiblePanel3.add(priceLabel);
         priceLabel.setBounds(200, 8, 200, 150);
-        midScreen.add(priceField);
+        splitScreen1.add(priceField);
 
         Vector<String> columnNames = new Vector<>();
         columnNames.add("ID");
@@ -95,7 +102,7 @@ public class manageBooksFrame extends JFrame {
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(bookTable);
         scrollPane.setBounds(50, 250, 900, 300); // Adjust the size as needed
-        midScreen.add(scrollPane);
+        splitScreen1.add(scrollPane);
 
         // Submit button for the form
         JButton submitButton = new JButton("Add Book");
@@ -128,7 +135,7 @@ public class manageBooksFrame extends JFrame {
 
 
         // Add the submit button to the midScreen panel
-        midScreen.add(submitButton);
+        splitScreen1.add(submitButton);
 
 
         // Make the frame visible
