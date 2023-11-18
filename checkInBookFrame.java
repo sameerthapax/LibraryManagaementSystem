@@ -37,8 +37,7 @@ public class checkInBookFrame extends JFrame {
             new LibraryHomeScreen();
             dispose();
         });
-        home.setBounds(930, 700, 64, 64);
-        add(home);
+
 
         // Initialize midScreen panel
         midScreen = new JPanel();
@@ -46,6 +45,8 @@ public class checkInBookFrame extends JFrame {
         midScreen.setBounds(50, 50, 900, 700);
         midScreen.setBackground(Color.PINK);
         add(midScreen);
+        home.setBounds(550, 442, 84, 84);
+        midScreen.add(home);
 
         // Book ID Input
 

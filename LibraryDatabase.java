@@ -35,9 +35,14 @@ public class LibraryDatabase {
 
     // Method to initialize the database with some books
     public static void create() {
-        addBook(new Book(bookIdGenerator.generaterandomBook(), "1984", "Dystopian", 15));
-        addBook(new Book(bookIdGenerator.generaterandomBook(), "To Kill a Mockingbird", "Classic", 12));
-        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Great Gatsby", "Classic", 10));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "1984", "Dystopian", 89));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "To Kill a Mockingbird", "Classic", 77));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Great Gatsby", "Classic", 90));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Power", "Sci-fi", 85));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Harry Potter and The Cursed Child", "Fantasy", 200));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Avengers", "Comic", 100));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Spider Man", "Comic", 73));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Fitness Club", "Magazine", 20));
     }
 
     // Method to add a book

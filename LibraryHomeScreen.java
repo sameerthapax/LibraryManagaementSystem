@@ -77,10 +77,7 @@ public class LibraryHomeScreen extends JFrame {
     /**
      * Adds action listeners to the buttons for opening different frames.
      *
-     * @param btnManageBooks Button to open Manage Books frame.
-     * @param btnManageMembers Button to open Manage Members frame.
-     * @param btnCheckInBook Button to open Check In Book frame.
-     * @param btnReturnBook Button to open Return Book frame.
+
      */
     private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook, JButton btnViewBook) {
         btnManageBooks.addActionListener(e -> {

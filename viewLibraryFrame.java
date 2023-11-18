@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class viewLibraryFrame {
@@ -26,22 +27,40 @@ public class viewLibraryFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         frame.add(scrollPane, BorderLayout.CENTER);
 
+        //getting home icon
+        ImageIcon homeIcon = new ImageIcon("home.png");
+
         // Setup the control panel for sorting and searching
         JPanel controlPanel = new JPanel();
+        JButton btnHome = new JButton("Home",homeIcon);
         JButton btnSortTitle = new JButton("Sort by Title");
         JButton btnSortGenre = new JButton("Sort by Genre");
+        JButton btnSortPrice = new JButton("Sort by Price");
         JTextField searchField = new JTextField(10);
         JButton btnSearch = new JButton("Search");
 
         controlPanel.add(btnSortTitle);
         controlPanel.add(btnSortGenre);
+        controlPanel.add(btnSortPrice);
         controlPanel.add(searchField);
         controlPanel.add(btnSearch);
         frame.add(controlPanel, BorderLayout.NORTH);
+        frame.add(btnHome,BorderLayout.PAGE_END);
+
+        //centering frame
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+
+
 
         // Add action listeners for buttons
+        btnHome.addActionListener(e -> {
+            new LibraryHomeScreen();
+            frame.dispose();
+        });
         btnSortTitle.addActionListener(e -> sortBooksByTitle());
         btnSortGenre.addActionListener(e -> sortBooksByGenre());
+        btnSortPrice.addActionListener(e -> sortBooksByPrice());
         btnSearch.addActionListener(e -> searchBooks(searchField.getText()));
 
         // Display all books initially
@@ -64,6 +83,11 @@ public class viewLibraryFrame {
     private void sortBooksByGenre() {
         List<Book> sortedBooks = new ArrayList<>(LibraryDatabase.getBooks().values());
         sortedBooks.sort((o1, o2) -> o1.genre.compareToIgnoreCase(o2.genre));
+        updateTable(sortedBooks);
+    }
+    private void sortBooksByPrice() {
+        List<Book> sortedBooks = new ArrayList<>(LibraryDatabase.getBooks().values());
+        sortedBooks.sort(Comparator.comparingInt(   o -> o.price));
         updateTable(sortedBooks);
     }
 
