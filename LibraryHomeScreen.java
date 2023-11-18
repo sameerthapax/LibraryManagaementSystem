@@ -39,17 +39,19 @@ public class LibraryHomeScreen extends JFrame {
         JButton btnManageMembers = createButton("Manage Members", "user.png");
         JButton btnCheckInBook = createButton("Check In Book", "check.png");
         JButton btnReturnBook = createButton("Return Book", "return.png");
+        JButton btnViewBook = createButton("View Library","library.png");
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 3)); // 2x2 grid with 10px padding
+        buttonPanel.setLayout(new GridLayout(2, 4)); // 2x3 grid
         buttonPanel.add(btnManageBooks);
         buttonPanel.add(btnManageMembers);
         buttonPanel.add(btnCheckInBook);
         buttonPanel.add(btnReturnBook);
+        buttonPanel.add(btnViewBook);
 
         // Add action listeners to buttons
-        addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook);
+        addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook,btnViewBook);
 
         // Add the button panel to the frame
         add(buttonPanel, BorderLayout.CENTER);
@@ -62,9 +64,7 @@ public class LibraryHomeScreen extends JFrame {
     /**
      * Creates a JButton with specified text and icon.
      *
-     * @param text Text for the button.
-     * @param iconPath Path to the icon image.
-     * @return Configured JButton.
+
      */
     private JButton createButton(String text, String iconPath) {
         ImageIcon icon = new ImageIcon(iconPath);
@@ -82,7 +82,7 @@ public class LibraryHomeScreen extends JFrame {
      * @param btnCheckInBook Button to open Check In Book frame.
      * @param btnReturnBook Button to open Return Book frame.
      */
-    private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook) {
+    private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook, JButton btnViewBook) {
         btnManageBooks.addActionListener(e -> {
             openManageBooks();
             dispose();
@@ -99,6 +99,10 @@ public class LibraryHomeScreen extends JFrame {
             openReturnBook();
             dispose();
         });
+        btnViewBook.addActionListener(e -> {
+            openViewBook();
+            dispose();
+        });
     }
 
     // Methods to open different frames
@@ -106,4 +110,6 @@ public class LibraryHomeScreen extends JFrame {
     private void openManageMembers() { new manageMembersFrame(); }
     private void openCheckInBook() { new checkInBookFrame(); }
     private void openReturnBook() { new returnBookFrame(); }
+    private void openViewBook() { new viewLibraryFrame();}
+
 }

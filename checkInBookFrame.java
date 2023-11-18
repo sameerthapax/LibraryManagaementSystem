@@ -48,26 +48,32 @@ public class checkInBookFrame extends JFrame {
         add(midScreen);
 
         // Book ID Input
+
+        Font formFieldFont = new Font("Gurmukhi MN", Font.PLAIN, 38);
         JLabel bookIdLabel = new JLabel("Book ID:");
-        bookIdLabel.setBounds(50, 100, 100, 30);
+        bookIdLabel.setFont(formFieldFont);
+        bookIdLabel.setForeground(Color.YELLOW);
+        bookIdLabel.setBounds(200, 100, 400, 40);
         midScreen.add(bookIdLabel);
 
         bookIdField = new JTextField();
-        bookIdField.setBounds(150, 100, 200, 30);
+        bookIdField.setBounds(400, 78, 400, 80);
         midScreen.add(bookIdField);
 
         // User ID Input
         JLabel userIdLabel = new JLabel("User ID:");
-        userIdLabel.setBounds(50, 150, 100, 30);
+        userIdLabel.setFont(formFieldFont);
+        userIdLabel.setForeground(Color.YELLOW);
+        userIdLabel.setBounds(208, 230, 400, 40);
         midScreen.add(userIdLabel);
 
         userIdField = new JTextField();
-        userIdField.setBounds(150, 150, 200, 30);
+        userIdField.setBounds(400, 210, 400, 80);
         midScreen.add(userIdField);
 
         // Borrow Button
         borrowButton = new JButton("Borrow Book");
-        borrowButton.setBounds(150, 200, 200, 30);
+        borrowButton.setBounds(400, 342, 400, 80);
         borrowButton.addActionListener(e -> borrowBook());
         midScreen.add(borrowButton);
 
