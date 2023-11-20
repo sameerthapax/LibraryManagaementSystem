@@ -10,7 +10,7 @@ public class manageMembersFrame extends JFrame {
     private JTextField userIdField, usernameField;
     private JPasswordField passwordField;
     private JTextArea memberDetailsArea;
-    private JButton addButton, updateButton, removeButton;
+    private JButton addButton,removeButton;
     private JTable memberTable;
     private DefaultTableModel tableModel;
 
@@ -77,16 +77,13 @@ public class manageMembersFrame extends JFrame {
         splitScreen1.add(passwordField);
 
         // Adding buttons for member operations
-        updateButton = new JButton("Update Member");
-        addButton = new JButton("Register");
         removeButton = new JButton("Remove Member");
-        splitScreen1.add(updateButton);
-        splitScreen1.add(addButton);
+        addButton = new JButton("Register");
         splitScreen1.add(removeButton);
+        splitScreen1.add(addButton);
 
 
         // Action listeners for the buttons
-        updateButton.addActionListener(e -> updateMember());
         addButton.addActionListener(e -> addMember());
         removeButton.addActionListener(e -> removeMember());
 
@@ -126,45 +123,6 @@ public class manageMembersFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Failed to add member.");
         }
         refreshMemberList();    }
-
-    /**
-     * Method for updating member information.
-     */
-    private void updateMember() {
-        try {
-            int userId = Integer.parseInt(userIdField.getText());
-            if (LibraryDatabase.isUseridValid(userId)) {
-                // Prompt the user for a new username
-                String newUsername = JOptionPane.showInputDialog(this, "Enter new username:");
-                if (newUsername != null) {
-                    // Prompt the user for a new password
-                    JPasswordField passwordField = new JPasswordField();
-                    Object[] passwordPanel = {"Enter new password:", passwordField};
-                    int passwordResult = JOptionPane.showConfirmDialog(this, passwordPanel, "Password", JOptionPane.OK_CANCEL_OPTION);
-
-                    if (passwordResult == JOptionPane.OK_OPTION) {
-                        // User clicked OK, get the entered password
-                        char[] newPasswordChars = passwordField.getPassword();
-                        String newPassword = new String(newPasswordChars);
-
-                        // Update username and password separately
-                        boolean usernameUpdated = LibraryDatabase.updateUsername(userId, newUsername);
-                        boolean passwordUpdated = LibraryDatabase.updatePassword(userId, newPassword);
-                        refreshMemberList();
-                        if (usernameUpdated && passwordUpdated) {
-                            JOptionPane.showMessageDialog(this, "Member updated successfully.");
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Failed to update member.");
-                        }
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid User ID.");
-            }
-        } catch (NumberFormatException ex) {
-            memberDetailsArea.setText("Invalid user ID.");
-        }
-    }
 
     /**
      * Method for removing a member.
