@@ -71,16 +71,24 @@ public class returnBookFrame extends JFrame {
         LibraryDatabase.IssuedBook issuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
         if (issuedBook == null) {
             resultArea.setText("Book not found or not issued.");
-            return;
+        } else {
+            String username = issuedBook.username;
+            User user = LibraryDatabase.getUsers().get(username);
+            LibraryDatabase.IssuedBook IssuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
+            if (user == null) {
+                resultArea.setText("Invalid user.");
+            } else {
+                int userId = user.getUserId();
+                long daysOverdue = ChronoUnit.DAYS.between(LocalDate.parse(issuedBook.returnDate, DateTimeFormatter.ISO_LOCAL_DATE), returnDate);
+                double fine = calculateFine(daysOverdue);
+                LibraryDatabase.returnBook(bookId);
+                displayReturnInfo(fine);
+            }
         }
-
-        LocalDate dueDate = LocalDate.parse(issuedBook.returnDate, DateTimeFormatter.ISO_LOCAL_DATE);
-        long daysOverdue = ChronoUnit.DAYS.between(dueDate, returnDate);
-        double fine = calculateFine(daysOverdue);
-        LibraryDatabase.returnBook(bookId);
-
-        displayReturnInfo(fine);
     }
+
+            
+        
 
     private void displayReturnInfo(double fine) {
         resultArea.setText("Book returned successfully.\n");

@@ -117,6 +117,8 @@ public class manageMembersFrame extends JFrame {
     private void addMember() {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        User newUser= new User(username, password);
+        int generatedUserId = newUser.getUserId();
         boolean success = LibraryDatabase.addUser(new User(username, password));
         if (success) {
             JOptionPane.showMessageDialog(this, "Member added successfully.");

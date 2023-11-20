@@ -103,17 +103,6 @@ public class LibraryDatabase {
         }
     }
 
-    // Method to get issued book details
-    public static IssuedBook getIssuedBookDetails(int bookId) {
-        return issuedBooks.get(bookId);
-    }
-
-    // Method to check if a book is available
-    public static boolean isBookAvailable(int bookId) {
-        Book book = books.get(bookId);
-        return book != null && !book.isIssued;
-    }
-
     // Method to check if a user is valid
     public static boolean isUserValid(String username) {
         return users.containsKey(username);
@@ -136,7 +125,22 @@ public class LibraryDatabase {
         if (book != null) {
             book.isIssued = false;
         }
+        
+        //Remove the issued book record
+        issuedBooks.remove(bookId);
     }
+    // Method to check if a book is available
+public static boolean isBookAvailable(int bookId) {
+    Book book = books.get(bookId);
+    return book != null && !book.isIssued;
+}
+
+// Method to get issued book details
+public static IssuedBook getIssuedBookDetails(int bookId) {
+    return issuedBooks.get(bookId);
+}
+
+
 
     // Method to update user's username
     public static boolean updateUsername(int userId, String newUsername){
@@ -187,4 +191,5 @@ public class LibraryDatabase {
 
 
     }
+    
 }
