@@ -3,6 +3,9 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Frame for handeling the book check-ins in the library management system.
+ */
 public class checkInBookFrame extends JFrame {
 
     private JTextField bookIdField;

@@ -5,18 +5,24 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
+
+/**
+ * Class representing the interface for returning books in the library management system.
+ */
 public class returnBookFrame extends JFrame {
     private static final double DAILY_FINE_RATE = 0.50;
     private JTextField bookIdField, returnDateField;
     private JButton returnButton;
     private JTextArea resultArea;
 
+    // Constructor to initialize the components of the return book frame.
     public returnBookFrame() {
         initializeComponents();
         layoutComponents();
         addActionListeners();
     }
 
+    // Initialize GUI components 
     private void initializeComponents() {
         setTitle("Return Book");
         setSize(400, 300);
@@ -30,6 +36,7 @@ public class returnBookFrame extends JFrame {
         resultArea.setEditable(false);
     }
 
+    // Organization of the GUI components
     private void layoutComponents() {
         add(new JLabel("Book ID:"));
         add(bookIdField);
@@ -42,7 +49,7 @@ public class returnBookFrame extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
     }
-
+     // Home Button with an action listener to return to the main home page.
     private JButton createHomeButton() {
         ImageIcon homeIcon = new ImageIcon("home.png");
         JButton homeButton = new JButton(homeIcon);
@@ -52,11 +59,13 @@ public class returnBookFrame extends JFrame {
         });
         return homeButton;
     }
-
+    
+    // action listener to the return button for processing book return.
     private void addActionListeners() {
         returnButton.addActionListener(e -> returnBook());
     }
-
+     
+    //Process the return of books based on the user's input
     private void returnBook() {
         try {
             int bookId = Integer.parseInt(bookIdField.getText());
@@ -66,7 +75,8 @@ public class returnBookFrame extends JFrame {
             resultArea.setText("Invalid input: " + ex.getMessage());
         }
     }
-
+    
+    //Logic of returning books, includes calculating fines and update the records.
     private void processReturn(int bookId, LocalDate returnDate) {
         LibraryDatabase.IssuedBook issuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
         if (issuedBook == null) {
@@ -88,7 +98,11 @@ public class returnBookFrame extends JFrame {
     }
 
             
-        
+    /**
+     * Display return information
+     * Success message if the process was successful or not
+     * @param fine calculation if overdue
+     */    
 
     private void displayReturnInfo(double fine) {
         resultArea.setText("Book returned successfully.\n");
@@ -98,6 +112,12 @@ public class returnBookFrame extends JFrame {
             resultArea.append("No fine imposed.");
         }
     }
+
+    /**
+     * Calculate the fine based on the number of days it was overdue.
+     * @param daysOverdue The number of days the book was overdue.
+     * @return The calculated fine.
+     */
 
     private double calculateFine(long daysOverdue) {
         if (daysOverdue > 0) {

@@ -1,3 +1,7 @@
+/**
+ * Book class for the library management system.
+ */
+
 public class Book {
 
     int bid; // Book ID

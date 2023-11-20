@@ -3,10 +3,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Vector;
 
+/**
+ * For managing books in the library management system.
+ */
 public class manageBooksFrame extends JFrame {
     JTable bookTable;
     DefaultTableModel tableModel;
 
+    /**
+     * Constructor for the manageBooksFrame class.
+     * Sets up the GUI components for managing books.
+     */
     public manageBooksFrame() {
         setTitle("Manage Books");
         setSize(1000, 1100); // Set the size of the frame
@@ -14,23 +21,23 @@ public class manageBooksFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);        // Add content to this frame (e.g., a form to add/edit books)
         setLayout(null); // Set up the layout
 
-        // For now, we'll just add a label to indicate this is the Manage Books frame
+        // A label to indicate this is the Manage Books frame
         JLabel label = new JLabel("Book management operations will go here", SwingConstants.CENTER);
 
+        //Home button
         ImageIcon homeIcon = new ImageIcon("home.png");
         JButton home = new JButton(homeIcon);//creating new button for going back to home
         home.addActionListener(e -> {
             new LibraryHomeScreen();
-            dispose();
+            dispose(); // Close the current frame
         });
         home.setBounds(930, 700, 64, 64);
         add(label);
 
-
+        // Title for the frame
         JLabel title = new JLabel("Book Management");
         Font titleFont = new Font("Aharoni", Font.BOLD, 58);
         title.setFont(titleFont);
-
         title.setBounds(230, 5, 700, 80);
         add(title);
 
@@ -43,6 +50,7 @@ public class manageBooksFrame extends JFrame {
         midScreen.add(splitScreen1,BorderLayout.CENTER);
         midScreen.add(home,BorderLayout.AFTER_LAST_LINE);
 
+        // Set layout for form elements
         splitScreen1.setLayout(new GridLayout(0, 2, 10, 10)); // Set layout for form elements
         midScreen.setBounds(50, 120, 900, 600);
         midScreen.setBackground(Color.PINK);
@@ -141,7 +149,8 @@ public class manageBooksFrame extends JFrame {
         // Make the frame visible
         setVisible(true);
     }
-
+ 
+    //Refreshes the book list in the Table.
     public void refreshBookList() {
         Vector<Vector<Object>> dataVector = LibraryDatabase.getBookDataVector();
         Vector<String> columnNames = new Vector<>();

@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Frame to view the books in the Library
+ */
 public class viewLibraryFrame {
     private JFrame frame;
     private JTable table;
     private DefaultTableModel tableModel;
 
+    // Constructor fot the viewLibrary frame.
     public viewLibraryFrame() {
 
 
@@ -69,28 +73,34 @@ public class viewLibraryFrame {
         // Show the window
         frame.setVisible(true);
     }
-
+    
+    //displays all the book in the library
     private void displayAllBooks() {
         updateTable(LibraryDatabase.getBooks().values());
     }
-
+    
+    //sort the books in alphabetical order by the title name.
     private void sortBooksByTitle() {
         List<Book> sortedBooks = new ArrayList<>(LibraryDatabase.getBooks().values());
         sortedBooks.sort((o1, o2) -> o1.bname.compareToIgnoreCase(o2.bname));
         updateTable(sortedBooks);
     }
 
+    //sorts the books alphabetically by genre.
     private void sortBooksByGenre() {
         List<Book> sortedBooks = new ArrayList<>(LibraryDatabase.getBooks().values());
         sortedBooks.sort((o1, o2) -> o1.genre.compareToIgnoreCase(o2.genre));
         updateTable(sortedBooks);
     }
+
+    //sorts the books by price in ascending order.
     private void sortBooksByPrice() {
         List<Book> sortedBooks = new ArrayList<>(LibraryDatabase.getBooks().values());
         sortedBooks.sort(Comparator.comparingInt(   o -> o.price));
         updateTable(sortedBooks);
     }
 
+    //Searches the books based on the tirle or the genre
     private void searchBooks(String searchText) {
         List<Book> matchedBooks = new ArrayList<>();
         for (Book book : LibraryDatabase.getBooks().values()) {
@@ -101,6 +111,7 @@ public class viewLibraryFrame {
         updateTable(matchedBooks);
     }
 
+    //updates the table
     private void updateTable(Iterable<Book> books) {
         tableModel.setRowCount(0); // Clear existing data
         for (Book book : books) {
