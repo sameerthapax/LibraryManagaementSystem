@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
@@ -96,6 +99,14 @@ public class manageMembersFrame extends JFrame {
         Vector<String> columnNames = getColumnNames();
         tableModel = new DefaultTableModel(LibraryDatabase.getMemberDataVector(), columnNames);
         memberTable = new JTable(tableModel);
+        // Add a ListSelectionListener to the JTable
+        memberTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Call a method to handle row selection
+                handleMemberSelection();
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(memberTable);
         scrollPane.setBounds(50, 400, 900, 300);
         splitScreen1.add(scrollPane);
