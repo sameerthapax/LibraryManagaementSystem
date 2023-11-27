@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +14,7 @@ public class viewLibraryFrame {
     private JFrame frame;
     private JTable table;
     private DefaultTableModel tableModel;
+    String searchText;
 
     // Constructor fot the viewLibrary frame.
     public viewLibraryFrame() {
@@ -40,14 +43,14 @@ public class viewLibraryFrame {
         JButton btnSortTitle = new JButton("Sort by Title");
         JButton btnSortGenre = new JButton("Sort by Genre");
         JButton btnSortPrice = new JButton("Sort by Price");
-        JTextField searchField = new JTextField(10);
-        JButton btnSearch = new JButton("Search");
+        JTextField searchField = new JTextField(20);
+        searchField.setText("Search Here!");
 
         controlPanel.add(btnSortTitle);
         controlPanel.add(btnSortGenre);
         controlPanel.add(btnSortPrice);
         controlPanel.add(searchField);
-        controlPanel.add(btnSearch);
+
         frame.add(controlPanel, BorderLayout.NORTH);
         frame.add(btnHome,BorderLayout.PAGE_END);
 
@@ -65,7 +68,22 @@ public class viewLibraryFrame {
         btnSortTitle.addActionListener(e -> sortBooksByTitle());
         btnSortGenre.addActionListener(e -> sortBooksByGenre());
         btnSortPrice.addActionListener(e -> sortBooksByPrice());
-        btnSearch.addActionListener(e -> searchBooks(searchField.getText()));
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(searchField.getText().equals("Search Here!")){
+                    searchField.setText("");
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                searchText = searchField.getText().toLowerCase();
+                searchBooks(searchText);
+            }
+        });
 
         // Display all books initially
         displayAllBooks();
@@ -100,11 +118,11 @@ public class viewLibraryFrame {
         updateTable(sortedBooks);
     }
 
-    //Searches the books based on the tirle or the genre
+    //Searches the books based on the name or the genre
     private void searchBooks(String searchText) {
         List<Book> matchedBooks = new ArrayList<>();
         for (Book book : LibraryDatabase.getBooks().values()) {
-            if (book.bname.equalsIgnoreCase(searchText) || book.genre.equalsIgnoreCase(searchText)) {
+            if (book.bname.toLowerCase().contains(searchText) || book.genre.toLowerCase().contains(searchText)) {
                 matchedBooks.add(book);
             }
         }
