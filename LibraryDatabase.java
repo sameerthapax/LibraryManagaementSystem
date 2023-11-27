@@ -75,6 +75,7 @@ public class LibraryDatabase {
             Vector<Object> row = new Vector<>();
             row.add(user.getUserId());
             row.add(user.getUsername());
+            row.add(user.getPhoneNumber());
             dataVector.add(row);
         }
         return dataVector;
@@ -128,7 +129,8 @@ public class LibraryDatabase {
         //Remove the issued book record
         issuedBooks.remove(bookId);
     }
-    // Method to check if a book is available
+
+// Method to check if a book is available
 public static boolean isBookAvailable(int bookId) {
     Book book = books.get(bookId);
     return book != null && !book.isIssued;

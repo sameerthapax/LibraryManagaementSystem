@@ -4,10 +4,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //User class for the library management system.
 public class User {
-    private static final AtomicInteger count = new AtomicInteger(0); // For unique user IDs
+    private static final AtomicInteger count = new AtomicInteger(10000); // For unique user IDs
     private final int userId;
     private String username;
     private String password; // In a real application, this should be a hashed password
+    private String phoneNumber;
     private Set<Integer> borrowedBooks;
 
     /**
@@ -15,10 +16,11 @@ public class User {
      * @param username The username of the user.
      * @param password The password of the user.
      */
-    public User(String username, String password) {
+    public User(String username, String password, String phoneNumber) {
         this.userId = count.incrementAndGet(); // Assign and increment the user ID
         this.username = username;
         this.password = password;
+        this.phoneNumber= phoneNumber;
         this.borrowedBooks= new HashSet<>();
         
     }
@@ -45,6 +47,16 @@ public class User {
     //Getter for username
     public String getUsername() {
         return username;
+    }
+    
+    // Getter for phone number
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    // Setter for phone number
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     //Setter for username

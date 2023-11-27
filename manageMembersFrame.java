@@ -7,7 +7,7 @@ import java.util.Vector;
  * Class representing the frame for managing members in the library management system.
  */
 public class manageMembersFrame extends JFrame {
-    private JTextField userIdField, usernameField;
+    private JTextField usernameField, phoneNumberField;
     private JPasswordField passwordField;
     private JTextArea memberDetailsArea;
     private JButton addButton,removeButton;
@@ -54,27 +54,32 @@ public class manageMembersFrame extends JFrame {
         fieldPanel2.setOpaque(false);
         JPanel fieldPanel3 = new JPanel(null);
         fieldPanel3.setOpaque(false);
-        JLabel userId = new JLabel("UserId:");
-        userId.setFont(formFieldFont);
-        userId.setBounds(150,10,200,100);
-        fieldPanel1.add(userId);
-        userIdField = new JTextField();
+        
         JLabel username = new JLabel("Username:");
         username.setFont(formFieldFont);
         username.setBounds(150,10,200,100);
-        fieldPanel2.add(username);
+        fieldPanel1.add(username);
         usernameField = new JTextField();
+
         JLabel password = new JLabel("Password:");
         password.setFont(formFieldFont);
         password.setBounds(150,10,200,100);
-        fieldPanel3.add(password);
+        fieldPanel2.add(password);
         passwordField = new JPasswordField();
+
+
+        JLabel phoneNumber = new JLabel("Phone No:");
+        phoneNumber.setFont(formFieldFont);
+        phoneNumber.setBounds(150,10,200,100);
+        fieldPanel3.add(phoneNumber);
+        phoneNumberField = new JTextField();
+
         splitScreen1.add(fieldPanel1);
-        splitScreen1.add(userIdField);
-        splitScreen1.add(fieldPanel2);
         splitScreen1.add(usernameField);
-        splitScreen1.add(fieldPanel3);
+        splitScreen1.add(fieldPanel2);
         splitScreen1.add(passwordField);
+        splitScreen1.add(fieldPanel3);
+        splitScreen1.add(phoneNumberField);
 
         // Adding buttons for member operations
         removeButton = new JButton("Remove Member");
@@ -114,9 +119,11 @@ public class manageMembersFrame extends JFrame {
     private void addMember() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        User newUser= new User(username, password);
+        String phoneNumber = phoneNumberField.getText();
+        
+        User newUser= new User(username, password, phoneNumber);
         int generatedUserId = newUser.getUserId();
-        boolean success = LibraryDatabase.addUser(new User(username, password));
+        boolean success = LibraryDatabase.addUser(new User(username, password, phoneNumber));
         if (success) {
             JOptionPane.showMessageDialog(this, "Member added successfully.");
         } else {
@@ -150,6 +157,7 @@ public class manageMembersFrame extends JFrame {
 
         columnName.add("User Id");
         columnName.add("Username");
+        columnName.add("Phone Number");
 
         tableModel.setDataVector(dataVector, columnName );
     }
@@ -161,8 +169,28 @@ public class manageMembersFrame extends JFrame {
         Vector<String> columnNames = new Vector<>();
         columnNames.add("User ID");
         columnNames.add("Username");
+        columnNames.add("Phone Number");
         return columnNames;
     }
+
+    /**
+     * Method to handle member selection in the JTable.
+     */
+    private void handleMemberSelection() {
+        int selectedRow = memberTable.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            // Get data from the selected row in the JTable
+            Object userId = tableModel.getValueAt(selectedRow, 0);
+            Object username = tableModel.getValueAt(selectedRow, 1);
+            Object phoneNumber = tableModel.getValueAt(selectedRow, 2);
+
+            // Populate the text fields with the selected data
+            usernameField.setText(username.toString());
+            phoneNumberField.setText(phoneNumber.toString());
+        }
+    }
+
 
 
 }
