@@ -1,5 +1,5 @@
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //User class for the library management system.
@@ -9,7 +9,8 @@ public class User {
     private String username;
     private String password; // In a real application, this should be a hashed password
     private String phoneNumber;
-    private Set<Integer> borrowedBooks;
+    private float sessionId; // Session ID represented by a random float
+
 
     /**
      * Constructor to create a new user with userId, username, and password.
@@ -21,22 +22,17 @@ public class User {
         this.username = username;
         this.password = password;
         this.phoneNumber= phoneNumber;
-        this.borrowedBooks= new HashSet<>();
-        
+        this.sessionId = generateRandomFloat(); // Generate a random float for the session ID
     }
+    // Generate a random float for session ID
+    private float generateRandomFloat() {
+        Random random = new Random();
+        return random.nextFloat();
 
-    /**
-     * Method to borrow a book, adding the book Id to borrow the book.
-     * @param bookId The ID of the book to be borrowed.
-     */
-    
-    public void borrowBook(int bookId){
-        borrowedBooks.add(bookId);
     }
-    
-    //Method to return the book, and also remove the book ID.
-    public boolean returnBook(int bookId){
-        return borrowedBooks.remove(bookId);
+    // Getter for session ID
+    public float getSessionId() {
+        return sessionId;
     }
 
     //Getter for user ID
@@ -54,11 +50,7 @@ public class User {
         return phoneNumber;
     }
 
-    // Setter for phone number
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-    
+
     //Setter for username
     public void setUsername(String username) {
         this.username = username;
@@ -74,18 +66,8 @@ public class User {
         this.password = password; // In a real application, hash the password
     }
 
-    /**
-     * Getter for the set of borrowed books.
-     * @return A set of book IDs that the user has borrowed.
-     */
-    public Set<Integer> getBorrowedBooks() {
-        return new HashSet<>(borrowedBooks);
-    }
 
-    /**@Override toString method to provide string representation of the user.
-     * 
-     * @return A string representation of the user.
-    */
+
     public String toString() {
         return "User ID: " + userId + ", Username: " + username;
     }
