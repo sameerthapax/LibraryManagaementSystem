@@ -41,7 +41,9 @@ public class LoginInterface extends JFrame {
         // Button panel with login button
         JPanel buttonPanel = new JPanel();
         JButton loginButton = new JButton("Login");
+        JButton becomeMemberButton = new JButton("Become a Member");
         buttonPanel.add(loginButton);
+        buttonPanel.add(becomeMemberButton);
 
         // Status label to display login messages
         statusLabel = new JLabel("Enter your credentials (Case Sensitive)", SwingConstants.CENTER);
@@ -73,9 +75,16 @@ public class LoginInterface extends JFrame {
                 statusLabel.setForeground(Color.RED);
             }
         });
+        becomeMemberButton.addActionListener(e -> openRegisterMemberFrame());
+    
     }
     public boolean authenticate(String username, String password) {
         return LibraryDatabase.authenticate(username, password);
     }
 
+    private void openRegisterMemberFrame() {
+        RegisterMemberFrame registerFrame = new RegisterMemberFrame();
+        registerFrame.setVisible(true);
+    }
+    
 }

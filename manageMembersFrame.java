@@ -13,6 +13,7 @@ import java.util.Vector;
 public class manageMembersFrame extends JFrame {
     private JTextField usernameField, phoneNumberField;
     private JPasswordField passwordField;
+    private JTextArea memberDetailsArea;
     private JComboBox roleField;
     private JButton addButton,removeButton;
     private JTable memberTable;
