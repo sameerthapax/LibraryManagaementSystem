@@ -66,10 +66,10 @@ public class checkInBookFrame extends JFrame {
         midScreen.add(bookIdField);
 
         // User ID Input
-        JLabel userIdLabel = new JLabel("Username");
+        JLabel userIdLabel = new JLabel("Username:");
         userIdLabel.setFont(formFieldFont);
         userIdLabel.setForeground(Color.YELLOW);
-        userIdLabel.setBounds(208, 230, 400, 40);
+        userIdLabel.setBounds(190, 230, 400, 40);
         midScreen.add(userIdLabel);
 
         userIdField = new JTextField();

@@ -42,8 +42,9 @@ public class LoginInterface extends JFrame {
         JPanel buttonPanel = new JPanel();
         JButton loginButton = new JButton("Login");
         JButton becomeMemberButton = new JButton("Become a Member");
-        buttonPanel.add(loginButton);
         buttonPanel.add(becomeMemberButton);
+        buttonPanel.add(loginButton);
+
 
         // Status label to display login messages
         statusLabel = new JLabel("Enter your credentials (Case Sensitive)", SwingConstants.CENTER);
