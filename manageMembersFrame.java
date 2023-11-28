@@ -134,6 +134,7 @@ public class manageMembersFrame extends JFrame {
 
         // Make the frame visible
         setVisible(true);
+
     }
 
     /**

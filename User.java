@@ -26,6 +26,9 @@ public class User {
         this.sessionId = generateRandomFloat(); // Generate a random float for the session ID
         this.role = role; // Initialize role
     }
+
+
+
     // Generate a random float for session ID
     private float generateRandomFloat() {
         Random random = new Random();
@@ -70,8 +73,5 @@ public class User {
 
 
 
-    public String toString() {
-        return "User ID: " + userId + ", Username: " + username;
-    }
 
 }

@@ -174,6 +174,10 @@ public static IssuedBook getIssuedBookDetails(int bookId) {
         return users.containsKey(userId);
     }
 
+    public static User getUser(String username) {
+        return users.get(username);
+    }
+
     /**
      * Inner class representing an issued book.
      */

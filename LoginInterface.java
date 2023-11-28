@@ -44,7 +44,7 @@ public class LoginInterface extends JFrame {
         buttonPanel.add(loginButton);
 
         // Status label to display login messages
-        statusLabel = new JLabel("Enter your credentials", SwingConstants.CENTER);
+        statusLabel = new JLabel("Enter your credentials (Case Sensitive)", SwingConstants.CENTER);
         statusLabel.setForeground(Color.BLUE);
 
         // Add panels and label to the frame
@@ -57,7 +57,12 @@ public class LoginInterface extends JFrame {
 
         // Add action listener for login button
         loginButton.addActionListener(e -> {
-            if (authenticate(usernameField.getText(), new String(passwordField.getPassword()))) {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            if (authenticate(username,password)) {
+                // Set the current user
+                User loggedInUser = LibraryDatabase.getUser(username);
+                CurrentUser.setCurrentUser(loggedInUser);
                 statusLabel.setText("Login successful!");
                 statusLabel.setForeground(Color.GREEN);
                 LibraryHomeScreen home = new LibraryHomeScreen();

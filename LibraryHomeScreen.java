@@ -34,6 +34,12 @@ public class LibraryHomeScreen extends JFrame {
         // Set the menu bar
         setJMenuBar(menuBar);
 
+        Font openFont = new Font("Gurmukhi MN", Font.PLAIN, 38);
+        JPanel levelPanel = new JPanel();
+        JLabel openText = new JLabel("Hello "+CurrentUser.getCurrentUser().getUsername());
+        openText.setFont(openFont);
+        levelPanel.add(openText);
+
         // Create and configure buttons
         JButton btnManageBooks = createButton("Manage Books", "briefcase.png");
         JButton btnManageMembers = createButton("Manage Members", "user.png");
@@ -43,7 +49,7 @@ public class LibraryHomeScreen extends JFrame {
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 4)); // 2x3 grid
+        buttonPanel.setLayout(new GridLayout(2, 4,10,10)); // 2x3 grid
         buttonPanel.add(btnManageBooks);
         buttonPanel.add(btnManageMembers);
         buttonPanel.add(btnCheckInBook);
@@ -53,7 +59,8 @@ public class LibraryHomeScreen extends JFrame {
         // Add action listeners to buttons
         addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook,btnViewBook);
 
-        // Add the button panel to the frame
+        // Add the button panel and level panel to the frame
+        add (levelPanel, BorderLayout.PAGE_START);
         add(buttonPanel, BorderLayout.CENTER);
 
         // Center the frame on the screen and make it visible
