@@ -74,9 +74,8 @@ public class LoginInterface extends JFrame {
             }
         });
     }
-
-
-    private boolean authenticate(String username, String password) {
+    public boolean authenticate(String username, String password) {
         return LibraryDatabase.authenticate(username, password);
     }
+
 }

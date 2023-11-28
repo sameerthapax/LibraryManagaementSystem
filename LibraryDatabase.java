@@ -178,6 +178,10 @@ public static IssuedBook getIssuedBookDetails(int bookId) {
         return users.get(username);
     }
 
+    public static String getBook(int BookId) {
+        return books.get(BookId).bname;
+    }
+
     /**
      * Inner class representing an issued book.
      */
