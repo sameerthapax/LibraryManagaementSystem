@@ -4,6 +4,7 @@ import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -12,10 +13,11 @@ import java.util.Vector;
 public class manageMembersFrame extends JFrame {
     private JTextField usernameField, phoneNumberField;
     private JPasswordField passwordField;
-    private JTextArea memberDetailsArea;
+    private JComboBox roleField;
     private JButton addButton,removeButton;
     private JTable memberTable;
     private DefaultTableModel tableModel;
+    String[] roles = {"Not Admin","Admin"};
 
     /**
      * Constructor for ManageMembersFrame.
@@ -57,6 +59,8 @@ public class manageMembersFrame extends JFrame {
         fieldPanel2.setOpaque(false);
         JPanel fieldPanel3 = new JPanel(null);
         fieldPanel3.setOpaque(false);
+        JPanel fieldPanel4 = new JPanel(null);
+        fieldPanel4.setOpaque(false);
         
         JLabel username = new JLabel("Username:");
         username.setFont(formFieldFont);
@@ -77,12 +81,20 @@ public class manageMembersFrame extends JFrame {
         fieldPanel3.add(phoneNumber);
         phoneNumberField = new JTextField();
 
+        JLabel role = new JLabel("Role:");
+        role.setFont(formFieldFont);
+        role.setBounds(150,10,200,100);
+        fieldPanel4.add(role);
+        roleField = new JComboBox(roles);
+
         splitScreen1.add(fieldPanel1);
         splitScreen1.add(usernameField);
         splitScreen1.add(fieldPanel2);
         splitScreen1.add(passwordField);
         splitScreen1.add(fieldPanel3);
         splitScreen1.add(phoneNumberField);
+        splitScreen1.add(fieldPanel4);
+        splitScreen1.add(roleField);
 
         // Adding buttons for member operations
         removeButton = new JButton("Remove Member");
@@ -131,10 +143,11 @@ public class manageMembersFrame extends JFrame {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String phoneNumber = phoneNumberField.getText();
+        String role = Objects.requireNonNull(roleField.getSelectedItem()).toString();
         
-        User newUser= new User(username, password, phoneNumber);
+        User newUser= new User(username, password, phoneNumber, role);
         int generatedUserId = newUser.getUserId();
-        boolean success = LibraryDatabase.addUser(new User(username, password, phoneNumber));
+        boolean success = LibraryDatabase.addUser(new User(username, password, phoneNumber,role));
         if (success) {
             JOptionPane.showMessageDialog(this, "Member added successfully.");
         } else {

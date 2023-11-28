@@ -10,6 +10,7 @@ public class User {
     private String password; // In a real application, this should be a hashed password
     private String phoneNumber;
     private float sessionId; // Session ID represented by a random float
+    private String role; // New field for user role
 
 
     /**
@@ -17,12 +18,13 @@ public class User {
      * @param username The username of the user.
      * @param password The password of the user.
      */
-    public User(String username, String password, String phoneNumber) {
+    public User(String username, String password, String phoneNumber, String role) {
         this.userId = count.incrementAndGet(); // Assign and increment the user ID
         this.username = username;
         this.password = password;
         this.phoneNumber= phoneNumber;
         this.sessionId = generateRandomFloat(); // Generate a random float for the session ID
+        this.role = role; // Initialize role
     }
     // Generate a random float for session ID
     private float generateRandomFloat() {
@@ -39,12 +41,12 @@ public class User {
     public int getUserId() {
         return userId;
     }
-    
+
     //Getter for username
     public String getUsername() {
         return username;
     }
-    
+
     // Getter for phone number
     public String getPhoneNumber() {
         return phoneNumber;
@@ -71,5 +73,5 @@ public class User {
     public String toString() {
         return "User ID: " + userId + ", Username: " + username;
     }
-    
+
 }

@@ -6,8 +6,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // Adding initial users to the LibraryDatabase
-        LibraryDatabase.addUser(new User("1", "1", "26029570"));
-        LibraryDatabase.addUser(new User("admin", "admin","278457848"));
+        LibraryDatabase.addUser(new User("1", "1", "2602957000","Not Admin"));
+        LibraryDatabase.addUser(new User("admin", "admin","0000000000","Admin"));
 
         // Initialize the LibraryDatabase with some books
         LibraryDatabase.create();
