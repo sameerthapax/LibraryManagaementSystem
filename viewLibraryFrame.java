@@ -10,8 +10,11 @@ import java.util.List;
 /**
  * Frame to view the books in the Library
  */
-public class viewLibraryFrame {
-    private JFrame frame;
+public class viewLibraryFrame extends JFrame {
+    private JPanel frame;
+    private JPanel frame2;
+    JPanel controlPanel;
+    JButton btnHome;
     private JTable table;
     private DefaultTableModel tableModel;
     String searchText;
@@ -21,13 +24,32 @@ public class viewLibraryFrame {
 
 
         // Setup the main window (JFrame)
-        frame = new JFrame("Library View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        setTitle("Library View");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 1100);
+        //centering frame
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        frame= new JPanel();
+        add(frame);
+        frame.setBounds(50, 120, 900, 600);
+        frame.setLayout(new BorderLayout());
+        setVisible(true);
+
+        frame2 = new JPanel();
+        JLabel title = new JLabel("Books View");
+        title.setFont(new Font("Aharoni", Font.BOLD, 58));
+        title.setBounds(300, 5, 500, 80);
+        frame2.add(title);
+        add(frame2,BorderLayout.PAGE_START);
+
+
 
         // Setup the table model
         tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(new String[] {"ID", "Title", "Genre", "Price","Borrowed"});
+
+
 
         // Setup the table
         table = new JTable(tableModel);
@@ -38,12 +60,12 @@ public class viewLibraryFrame {
         ImageIcon homeIcon = new ImageIcon("home.png");
 
         // Setup the control panel for sorting and searching
-        JPanel controlPanel = new JPanel();
-        JButton btnHome = new JButton("Home",homeIcon);
+        controlPanel = new JPanel();
+        btnHome = new JButton("Home",homeIcon);
         JButton btnSortTitle = new JButton("Sort by Title");
         JButton btnSortGenre = new JButton("Sort by Genre");
         JButton btnSortPrice = new JButton("Sort by Price");
-        JTextField searchField = new JTextField(20);
+        JTextField searchField = new JTextField(40);
         searchField.setText("Search Here!");
 
         controlPanel.add(btnSortTitle);
@@ -51,19 +73,19 @@ public class viewLibraryFrame {
         controlPanel.add(btnSortPrice);
         controlPanel.add(searchField);
 
-        frame.add(controlPanel, BorderLayout.NORTH);
+        frame.add(controlPanel, BorderLayout.BEFORE_FIRST_LINE);
         frame.add(btnHome,BorderLayout.PAGE_END);
 
-        //centering frame
-        frame.setLocationRelativeTo(null);
-        frame.pack();
+
+
+
 
 
 
         // Add action listeners for buttons
         btnHome.addActionListener(e -> {
             new LibraryHomeScreen();
-            frame.dispose();
+            dispose();
         });
         btnSortTitle.addActionListener(e -> sortBooksByTitle());
         btnSortGenre.addActionListener(e -> sortBooksByGenre());

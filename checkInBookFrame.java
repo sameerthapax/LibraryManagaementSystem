@@ -24,7 +24,7 @@ public class checkInBookFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
-        setBackground(Color.red);
+
 
         // Frame Title
         JLabel title = new JLabel("Book Check-Ins");
