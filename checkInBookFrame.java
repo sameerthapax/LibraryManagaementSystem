@@ -127,7 +127,8 @@ public class checkInBookFrame extends JFrame {
             if (LibraryDatabase.isBookAvailable(bookId) && LibraryDatabase.isUserValid(username)) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LibraryDatabase.issueBook(username, bookId, LocalDate.now().format(formatter), 14);
-                JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
+                LibraryDatabase.IssuedBook issuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
+                JOptionPane.showMessageDialog(this, "Book borrowed successfully! Your return date for this book is "+issuedBook.returnDate);
             } else {
                 JOptionPane.showMessageDialog(this, "Book is not available or user ID is invalid.");
             }

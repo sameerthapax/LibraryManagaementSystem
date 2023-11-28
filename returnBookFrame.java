@@ -84,7 +84,6 @@ public class returnBookFrame extends JFrame {
         } else {
             String username = issuedBook.username;
             User user = LibraryDatabase.getUsers().get(username);
-            LibraryDatabase.IssuedBook IssuedBook = LibraryDatabase.getIssuedBookDetails(bookId);
             if (user == null) {
                 resultArea.setText("Invalid user.");
             } else {
