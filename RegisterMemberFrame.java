@@ -36,6 +36,7 @@ public class RegisterMemberFrame extends JFrame {
          midScreen.setBackground(Color.PINK);
          add(midScreen);
          midScreen.add(splitScreen1, BorderLayout.CENTER);
+
  
  
          splitScreen1.setLayout(new GridLayout(0,2, 10, 10));
@@ -49,8 +50,7 @@ public class RegisterMemberFrame extends JFrame {
          fieldPanel2.setOpaque(false);
          JPanel fieldPanel3 = new JPanel(null);
          fieldPanel3.setOpaque(false);
-         JPanel fieldPanel4 = new JPanel(null);
-         fieldPanel4.setOpaque(false);
+         
          
          JLabel username = new JLabel("Username:");
          username.setFont(formFieldFont);
@@ -70,11 +70,15 @@ public class RegisterMemberFrame extends JFrame {
          phoneNumber.setBounds(150,10,200,100);
          fieldPanel3.add(phoneNumber);
          phoneNumberField = new JTextField();
- 
-         JLabel role = new JLabel("Role:");
-         role.setFont(formFieldFont);
-         role.setBounds(150,10,200,100);
-         fieldPanel4.add(role);
+
+         // Adding register button
+         registerButton = new JButton("Register");
+         registerButton.setSize(20,20);
+
+         loginButton = new JButton("Log In");
+         loginButton.setSize(20,20);
+
+         
         
  
          splitScreen1.add(fieldPanel1);
@@ -83,34 +87,22 @@ public class RegisterMemberFrame extends JFrame {
          splitScreen1.add(passwordField);
          splitScreen1.add(fieldPanel3);
          splitScreen1.add(phoneNumberField);
-         splitScreen1.add(fieldPanel4);
- 
-        
+         splitScreen1.add(loginButton);
+         splitScreen1.add(registerButton);
 
-        // Adding register button
-        registerButton = new JButton("Register");
-        registerButton.setBounds(150, 140, 100, 30);
+         
 
-        loginButton = new JButton("Log In");
-        loginButton.setBounds(400, 260, 200, 50);
+         
 
+       
 
-        // Add components to the frame
-        add(fieldPanel1);
-        add(fieldPanel2);
-        add(fieldPanel3);
-        add(usernameField);
-        add(passwordField);
-        add(phoneNumberField);
-        add(registerButton);
-        add(loginButton);
-
-        // Add action listener for register button
-        registerButton.addActionListener(e -> registerMember());
-        loginButton.addActionListener(e -> {
+         // Add action listener for register button
+         registerButton.addActionListener(e -> registerMember());
+         loginButton.addActionListener(e -> {
+            new LoginInterface();
             dispose(); // Close the registration frame
-            openLoginInterface(); // Open the login interface
-        });
+          });
+          
     }
 
     /**
@@ -127,13 +119,10 @@ public class RegisterMemberFrame extends JFrame {
         boolean success = LibraryDatabase.addUser(newUser);
         if (success) {
             JOptionPane.showMessageDialog(this, "Member registered successfully.");
-            dispose(); // Close the registration frame
         } else {
             JOptionPane.showMessageDialog(this, "Failed to register member.");
         }
     }
-    private void openLoginInterface() {
-        new LoginInterface();
-    }
+    
 
 }

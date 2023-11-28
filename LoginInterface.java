@@ -69,7 +69,7 @@ public class LoginInterface extends JFrame {
                 statusLabel.setForeground(Color.GREEN);
                 LibraryHomeScreen home = new LibraryHomeScreen();
                 home.setVisible(true);
-                setVisible(false);
+                dispose();
             } else {
                 statusLabel.setText("Login failed! Please try again.");
                 statusLabel.setForeground(Color.RED);
@@ -85,6 +85,7 @@ public class LoginInterface extends JFrame {
     private void openRegisterMemberFrame() {
         RegisterMemberFrame registerFrame = new RegisterMemberFrame();
         registerFrame.setVisible(true);
+        dispose();
     }
     
 }
