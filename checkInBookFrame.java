@@ -45,7 +45,7 @@ public class checkInBookFrame extends JFrame {
         // Initialize midScreen panel
         midScreen = new JPanel();
         midScreen.setLayout(null); // Using null layout for absolute positioning
-        midScreen.setBounds(50, 50, 900, 700);
+        midScreen.setBounds(50, 120, 900, 600);
         midScreen.setBackground(Color.PINK);
         add(midScreen);
         home.setBounds(550, 442, 84, 84);

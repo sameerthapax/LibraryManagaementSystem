@@ -46,6 +46,7 @@ public class LibraryHomeScreen extends JFrame {
         JButton btnCheckInBook = createButton("Check In Book", "check.png");
         JButton btnReturnBook = createButton("Return Book", "return.png");
         JButton btnViewBook = createButton("View Library","library.png");
+        JButton btnLogOut = createButton("Log Out","logout.png");
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
@@ -55,9 +56,10 @@ public class LibraryHomeScreen extends JFrame {
         buttonPanel.add(btnCheckInBook);
         buttonPanel.add(btnReturnBook);
         buttonPanel.add(btnViewBook);
+        buttonPanel.add(btnLogOut);
 
         // Add action listeners to buttons
-        addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook,btnViewBook);
+        addActionListeners(btnManageBooks, btnManageMembers, btnCheckInBook, btnReturnBook,btnViewBook,btnLogOut);
 
         // Add the button panel and level panel to the frame
         add (levelPanel, BorderLayout.PAGE_START);
@@ -86,14 +88,26 @@ public class LibraryHomeScreen extends JFrame {
      *
 
      */
-    private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook, JButton btnViewBook) {
+    private void addActionListeners(JButton btnManageBooks, JButton btnManageMembers, JButton btnCheckInBook, JButton btnReturnBook, JButton btnViewBook,JButton btnLogOut) {
         btnManageBooks.addActionListener(e -> {
-            openManageBooks();
-            dispose();
+            if (CurrentUser.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
+                openManageBooks();
+                dispose();
+            }else {
+                ImageIcon icon1 = new ImageIcon("lock.png");
+                btnManageBooks.setIcon(icon1);
+                JOptionPane.showMessageDialog(this, "Requires admin access.");
+            }
         });
         btnManageMembers.addActionListener(e -> {
-            openManageMembers();
-            dispose();
+            if (CurrentUser.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
+                openManageMembers();
+                dispose();
+            }else {
+                ImageIcon icon1 = new ImageIcon("lock.png");
+                btnManageMembers.setIcon(icon1);
+                JOptionPane.showMessageDialog(this, "Requires admin access.");
+            }
         });
         btnCheckInBook.addActionListener(e -> {
             openCheckInBook();
@@ -105,6 +119,11 @@ public class LibraryHomeScreen extends JFrame {
         });
         btnViewBook.addActionListener(e -> {
             openViewBook();
+            dispose();
+        });
+        btnLogOut.addActionListener(e -> {
+            CurrentUser.logout();
+            new LoginInterface();
             dispose();
         });
     }
