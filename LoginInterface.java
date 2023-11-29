@@ -62,7 +62,7 @@ public class LoginInterface extends JFrame {
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            if (authenticate(username,password)) {
+            if (LibraryDatabase.authenticate(username,password)) {
                 // Set the current user
                 User loggedInUser = LibraryDatabase.getUser(username);
                 CurrentUser.setCurrentUser(loggedInUser);
@@ -78,9 +78,6 @@ public class LoginInterface extends JFrame {
         });
         becomeMemberButton.addActionListener(e -> openRegisterMemberFrame());
     
-    }
-    public boolean authenticate(String username, String password) {
-        return LibraryDatabase.authenticate(username, password);
     }
 
     private void openRegisterMemberFrame() {

@@ -42,6 +42,24 @@ public class LibraryDatabase {
         addBook(new Book(bookIdGenerator.generaterandomBook(), "The Avengers", "Comic", 100));
         addBook(new Book(bookIdGenerator.generaterandomBook(), "The Spider Man", "Comic", 73));
         addBook(new Book(bookIdGenerator.generaterandomBook(), "Fitness Club", "Magazine", 20));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Beloved", "Friction", 80));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Pride and Prejudice", "Friction", 90));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Dune", "Sci-fi", 120));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Neuromancer", "Sci-fi", 70));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Ender's Game", "Sci-fi", 60));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Snow Crash", "Sci-fi", 80));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Lord of the Rings", "Fantasy", 100));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "A Game of Thrones", "Fantasy", 230));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Name of the Wind", "Fantasy", 90));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "Gone Girl", "Mystery", 90));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Girl with the Dragon Tattoo", "Mystery", 270));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Da Vinci Code", "Mystery", 80));
+        addBook(new Book(bookIdGenerator.generaterandomBook(), "The Silent Patient", "Mystery", 80));
+
+
+
+
+
     }
 
     // Method to add a book

@@ -80,6 +80,7 @@ public class checkInBookFrame extends JFrame {
         borrowButton = new JButton("Borrow Book");
         borrowButton.setBounds(400, 342, 400, 80);
         borrowButton.addActionListener(e -> {
+            try {
             bookId = Integer.parseInt(bookIdField.getText());
             JPanel panel = new JPanel();
             JLabel label = new JLabel("Enter a password:");
@@ -87,21 +88,28 @@ public class checkInBookFrame extends JFrame {
             panel.add(label);
             panel.add(pass);
             String[] options = new String[]{"OK", "Cancel"};
-            int option = JOptionPane.showOptionDialog(null, panel, "The title",
+            int option = JOptionPane.showOptionDialog(null, panel, "Alert!",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[1]);
             if (option == 0) {
-                String password= new String(pass.getPassword());
-                boolean s = new LoginInterface().authenticate(userIdField.getText(),password);
-                if (s){
-                    int resure = JOptionPane.showConfirmDialog(null,"Are you sure you want to borrow "+LibraryDatabase.getBook(bookId)+" book?","conform",JOptionPane.YES_NO_OPTION);
-                    if (resure==JOptionPane.YES_OPTION){
+                String password = new String(pass.getPassword());
+                boolean s =  LibraryDatabase.authenticate(userIdField.getText(), password);
+
+                if (s) {
+                    int resure = JOptionPane.showConfirmDialog(null, "Are you sure you want to borrow " + LibraryDatabase.getBook(bookId) + " book?", "conform", JOptionPane.YES_NO_OPTION);
+                    if (resure == JOptionPane.YES_OPTION) {
                         borrowBook();
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Your User Id or Password is wrong.");
 
                 }
+            }
+            }
+            catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(this, "Please enter correct in format.");
+
+
             }
 
         });
